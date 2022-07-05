@@ -9,10 +9,10 @@ trigger:
 # TODO: test stage, or step if it is worth reusing the ubuntu vm (likely)
 stages:
 - stage: Build
-  displayName: Build packages
+  displayName: Build Stage
   jobs:
   - job: Build
-    displayName: Build packages
+    displayName: Build Job
     pool:
       vmImage:  windows-2019
     steps:
@@ -23,4 +23,5 @@ stages:
         targetType: 'inline'
         script: |
           echo Build.SourcesDirectory=$(Build.SourcesDirectory)
-          ls $(Build.SourcesDirectory)
+          ls /
+          ls /d
