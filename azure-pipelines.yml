@@ -17,19 +17,26 @@ stages:
       vmImage:  windows-2019
     steps:
     - checkout: self
-    - task: Bash@3
+
+    # Configure the VM.
+    - script: |
+        echo %BUILD_SOURCESDIRECTORY%
+        echo
+        dir %BUILD_SOURCESDIRECTORY%
       displayName: 'Test: where repos are checked out'
-      inputs:
-        targetType: 'inline'
-        script: |
-          echo Build.SourcesDirectory=$(Build.SourcesDirectory)
-          echo
-          ls /
-          echo
-          ls /d
-          echo
-          ls /d/a
-          echo
-          ls /d/a/1
-          echo
-          ls /d/a/1/s
+    # - task: Bash@3
+    #   displayName: 'Test: where repos are checked out'
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       echo Build.SourcesDirectory=$(Build.SourcesDirectory)
+    #       echo
+    #       ls /
+    #       echo
+    #       ls /d
+    #       echo
+    #       ls /d/a
+    #       echo
+    #       ls /d/a/1
+    #       echo
+    #       ls /d/a/1/s
