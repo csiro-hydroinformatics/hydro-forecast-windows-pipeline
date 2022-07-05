@@ -23,5 +23,9 @@ stages:
         targetType: 'inline'
         script: |
           echo Build.SourcesDirectory=$(Build.SourcesDirectory)
+          echo
           ls /
+          echo
           ls /d
+          echo
+          ls /d/1/s
