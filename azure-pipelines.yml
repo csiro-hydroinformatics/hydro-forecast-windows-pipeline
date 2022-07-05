@@ -6,14 +6,21 @@
 trigger:
 - main
 
-pool:
-  vmImage:  windows-2019
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+# TODO: test stage, or step if it is worth reusing the ubuntu vm (likely)
+stages:
+- stage: Build
+  displayName: Build packages
+  jobs:
+  - job: Build
+    displayName: Build packages
+    pool:
+      vmImage:  windows-2019
+    steps:
+    - checkout: self
+    - task: Bash@3
+      displayName: 'Test: where repos are checked out'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo Build.SourcesDirectory=$(Build.SourcesDirectory)
+          ls $(Build.SourcesDirectory)
