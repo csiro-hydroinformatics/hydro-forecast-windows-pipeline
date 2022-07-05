@@ -28,4 +28,8 @@ stages:
           echo
           ls /d
           echo
-          ls /d/1/s
+          ls /d/a
+          echo
+          ls /d/a/1
+          echo
+          ls /d/a/1/s
