@@ -17,7 +17,6 @@ stages:
       vmImage:  windows-2019
     steps:
     - checkout: self
-
     # where are we??
     - script: |
         echo
@@ -30,10 +29,8 @@ stages:
       displayName: 'Test: where repos are checked out'
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-
-    # # Configure the VM.
-    # - script: |
-    #     set "CI=azure"
-    #     call activate base
-    #     run_conda_forge_build_setup
-    #   displayName: check out sources
+    - script: |
+        call checkout.bat
+      env:
+        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+      displayName: check out sources
