@@ -34,3 +34,11 @@ stages:
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
       displayName: check out sources
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
+        arguments: > # Use this to avoid newline characters in multiline string
+          -input1 "Hello"
+          -input2 "World"
+      displayName: 'Setup Powershell with Invoke-MsBuild'
