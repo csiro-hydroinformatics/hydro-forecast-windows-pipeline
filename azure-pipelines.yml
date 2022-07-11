@@ -18,25 +18,19 @@ stages:
     steps:
     - checkout: self
 
-    # Configure the VM.
+    # where are we??
     - script: |
-        echo %BUILD_SOURCESDIRECTORY%
         echo
-        dir %BUILD_SOURCESDIRECTORY%
+        echo current directory is:
+        cd
+        echo
+        echo BUILD_SOURCESDIRECTORY=%BUILD_SOURCESDIRECTORY%
+        echo
+        if defined SWIFT_PAT echo "SWIFT_PAT is defined"
       displayName: 'Test: where repos are checked out'
-    # - task: Bash@3
-    #   displayName: 'Test: where repos are checked out'
-    #   inputs:
-    #     targetType: 'inline'
-    #     script: |
-    #       echo Build.SourcesDirectory=$(Build.SourcesDirectory)
-    #       echo
-    #       ls /
-    #       echo
-    #       ls /d
-    #       echo
-    #       ls /d/a
-    #       echo
-    #       ls /d/a/1
-    #       echo
-    #       ls /d/a/1/s
+    # # Configure the VM.
+    # - script: |
+    #     set "CI=azure"
+    #     call activate base
+    #     run_conda_forge_build_setup
+    #   displayName: check out sources
