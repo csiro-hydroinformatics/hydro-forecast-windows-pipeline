@@ -32,6 +32,8 @@ set GITHUB_JM_REPO_ROOT=https://%GITHUB_URL_ROOT%/%FORK_USERNAME_GITHUB%
 set CSIRO_BITBUCKET=%OUR_SRC_DIR%
 set GITHUB_REPOS=%OUR_SRC_DIR%
 
+set exit_code=0
+
 cd %CSIRO_BITBUCKET%
 git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/numerical-sl-cpp.git
 if %errorlevel% neq 0 ( 
@@ -39,92 +41,106 @@ if %errorlevel% neq 0 (
     set exit_code=1
     goto exit
 )
+
+cd %CSIRO_BITBUCKET%
+git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/datatypes.git
+
+cd %CSIRO_BITBUCKET%
+git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/swift.git
+
+cd %CSIRO_BITBUCKET%
+git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
+
+cd %CSIRO_BITBUCKET%
+git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/moirai.git
+if %errorlevel% neq 0 ( 
+    echo "ERROR: moirai checkout failed"
+    set exit_code=1
+    goto exit
+)
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/rcpp-interop-commons.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/threadpool.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/wila.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/config-utils.git
+
+:: # OPTIONAL if needed to generate code for e.g. R package:
+@REM git clone %GITHUB_REPO_ROOT%/c-api-wrapper-generation.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_JM_REPO_ROOT%/yaml-cpp.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/vcpp-commons
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/efts.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/pyrefcount.git
+
+
 cd %CSIRO_BITBUCKET%\numerical-sl-cpp
 git checkout testing
+if %errorlevel% neq 0 ( 
+    echo "ERROR: numerical-sl-cpp branch checkout failed"
+    set exit_code=1
+    goto exit
+)
+cd %CSIRO_BITBUCKET%\datatypes
+git checkout experimental
+cd %CSIRO_BITBUCKET%\swift
+git checkout experimental
+cd %CSIRO_BITBUCKET%\qpp
+git checkout experimental
+cd %GITHUB_REPOS%\moirai
+git checkout experimental
+cd %GITHUB_REPOS%\rcpp-interop-commons
+git checkout experimental
+cd %GITHUB_REPOS%\threadpool
+git checkout master
+cd %GITHUB_REPOS%\wila
+git checkout experimental
+cd %GITHUB_REPOS%\config-utils
+git checkout testing
+cd %GITHUB_REPOS%\yaml-cpp
+git checkout yaml_swift_experimental
+cd %GITHUB_REPOS%\jsoncpp
+git checkout custom/experimental
+cd %GITHUB_REPOS%\vcpp-commons
+git checkout master
+cd %GITHUB_REPOS%\efts
+git checkout master
+
 
 @REM cd %CSIRO_BITBUCKET%
-@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/datatypes.git
-@REM cd %CSIRO_BITBUCKET%\datatypes
-@REM git checkout experimental
+@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/rpp-cpp.git
 
 @REM cd %CSIRO_BITBUCKET%
-@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/swift.git
-@REM cd %CSIRO_BITBUCKET%\swift
-@REM git checkout experimental
+@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/rpp-g-cpp.git
 
+@REM :: # OPTIONAL, for generating bindings for packages (advanced)
 @REM cd %CSIRO_BITBUCKET%
-@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
-@REM cd %CSIRO_BITBUCKET%\qpp
-@REM git checkout experimental
+@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/~%FORK_USERNAME_CSIRO%/c-api-bindings.git
 
+@REM :: # OPTIONAL
 @REM cd %CSIRO_BITBUCKET%
-@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
+@REM git clone %CSIRO_BITBUCKET_URL_ROOT%/~%FORK_USERNAME_CSIRO%/swift-scripts.git
 
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/moirai.git
-@REM cd %GITHUB_REPOS%\moirai
-@REM git checkout experimental
+echo "INFO: checkout.bat completed"
 
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/rcpp-interop-commons.git
-@REM cd %GITHUB_REPOS%\rcpp-interop-commons
-@REM git checkout experimental
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/threadpool.git
-@REM cd %GITHUB_REPOS%\threadpool
-@REM git checkout master
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/wila.git
-@REM cd %GITHUB_REPOS%\wila
-@REM git checkout experimental
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/config-utils.git
-@REM cd %GITHUB_REPOS%\config-utils
-@REM git checkout testing
-
-@REM :: # OPTIONAL if needed to generate code for e.g. R package:
-@REM @REM git clone %GITHUB_REPO_ROOT%/c-api-wrapper-generation.git
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_JM_REPO_ROOT%/yaml-cpp.git
-@REM cd %GITHUB_REPOS%\yaml-cpp
-@REM git checkout yaml_swift_experimental
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
-@REM cd %GITHUB_REPOS%\jsoncpp
-@REM git checkout custom/experimental
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/vcpp-commons
-@REM cd %GITHUB_REPOS%\vcpp-commons
-@REM git checkout master
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/efts.git
-@REM cd %GITHUB_REPOS%\efts
-@REM git checkout master
-
-@REM cd %GITHUB_REPOS%
-@REM git clone %GITHUB_REPO_ROOT%/pyrefcount.git
-
-@REM @REM cd %CSIRO_BITBUCKET%
-@REM @REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/rpp-cpp.git
-
-@REM @REM cd %CSIRO_BITBUCKET%
-@REM @REM git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/rpp-g-cpp.git
-
-@REM @REM :: # OPTIONAL, for generating bindings for packages (advanced)
-@REM @REM cd %CSIRO_BITBUCKET%
-@REM @REM git clone %CSIRO_BITBUCKET_URL_ROOT%/~%FORK_USERNAME_CSIRO%/c-api-bindings.git
-
-@REM @REM :: # OPTIONAL
-@REM @REM cd %CSIRO_BITBUCKET%
-@REM @REM git clone %CSIRO_BITBUCKET_URL_ROOT%/~%FORK_USERNAME_CSIRO%/swift-scripts.git
-
-echo "checkout.bat completed with success"
 :exit
 exit /b !exit_code!
