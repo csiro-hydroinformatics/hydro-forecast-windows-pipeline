@@ -26,8 +26,11 @@ stages:
         echo
         echo BUILD_SOURCESDIRECTORY=%BUILD_SOURCESDIRECTORY%
         echo
-        if defined SWIFT_PAT echo "SWIFT_PAT is defined"
+        if defined SWIFT_PAT_ENV_VAR echo "SWIFT_PAT is defined"
       displayName: 'Test: where repos are checked out'
+      env:
+        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+
     # # Configure the VM.
     # - script: |
     #     set "CI=azure"
