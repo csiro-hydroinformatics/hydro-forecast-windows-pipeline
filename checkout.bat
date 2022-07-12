@@ -36,12 +36,19 @@ set exit_code=0
 
 cd %CSIRO_BITBUCKET%
 git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
+
+cd %GITHUB_REPOS%
+git clone %GITHUB_REPO_ROOT%/vcpp-commons
+
 cd %CSIRO_BITBUCKET%\cruise-control
 git checkout testing
 
-echo "TEMP TEST: just check out cruise control, then exit."
-set exit_code=0
-goto exit
+cd %GITHUB_REPOS%\vcpp-commons
+git checkout master
+
+@REM echo "TEMP TEST: just check out cruise control, then exit."
+@REM set exit_code=0
+@REM goto exit
 
 cd %CSIRO_BITBUCKET%
 git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/numerical-sl-cpp.git
@@ -94,9 +101,6 @@ cd %GITHUB_REPOS%
 git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/vcpp-commons
-
-cd %GITHUB_REPOS%
 git clone %GITHUB_REPO_ROOT%/efts.git
 
 cd %GITHUB_REPOS%
@@ -130,8 +134,6 @@ cd %GITHUB_REPOS%\yaml-cpp
 git checkout yaml_swift_experimental
 cd %GITHUB_REPOS%\jsoncpp
 git checkout custom/experimental
-cd %GITHUB_REPOS%\vcpp-commons
-git checkout master
 cd %GITHUB_REPOS%\efts
 git checkout master
 

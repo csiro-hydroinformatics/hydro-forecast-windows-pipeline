@@ -7,7 +7,10 @@ trigger:
 - main
 
 variables:
+  root_src_dir: $(Build.SourcesDirectory)/s
   local_dir: $(Build.SourcesDirectory)/usr/local
+  local_dev_dir: $(Build.SourcesDirectory)/usr/localdev
+  include_dir: $(Build.SourcesDirectory)/usr/local/include
 
 stages:
 - stage: Build
@@ -26,6 +29,10 @@ stages:
         cd
         echo
         echo BUILD_SOURCESDIRECTORY=%BUILD_SOURCESDIRECTORY%
+        echo
+        echo Build.SourcesDirectory=$(Build.SourcesDirectory)
+        echo
+        echo local_dev_dir=$(local_dev_dir)
         echo
         if defined SWIFT_PAT_ENV_VAR echo "SWIFT_PAT is defined"
         echo 
@@ -48,6 +55,9 @@ stages:
           # which 7z  : /c/ProgramData/Chocolatey/bin/7z
           7z x libs_third_party.7z 
           7z x include_third_party.7z 
+          mkdir -p $(local_dev_dir)
+          # cd $(local_dev_dir)
+          mkdir -p $(include_dir)
           exit 0
       displayName: 'Install third party libraries and headers'
     #- script: |
@@ -67,20 +77,20 @@ stages:
       inputs:
         targetType: 'filePath'
         filePath: $(Build.SourcesDirectory)\make-props.ps1
-        #arguments: > # Use this to avoid newline characters in multiline string
-        #  -input1 "Hello"
-        #  -input2 "World"
       displayName: 'Create user vcpp_config.props'
     # - script: |
     #     call third-party-lib.bat
     #   env:
     #     SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
     #   displayName: Install third party precompiled libraries boost and netcdf
-    # - task: PowerShell@2
-    #   inputs:
-    #     targetType: 'filePath'
-    #     filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
-    #     arguments: > # Use this to avoid newline characters in multiline string
-    #       -input1 "Hello"
-    #       -input2 "World"
-    #   displayName: 'Compile with Invoke-MsBuild'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\build-stack.ps1
+        arguments: > # Use this to avoid newline characters in multiline string
+          -rootSrcDir $(rootSrcDir) 
+          -localDir $(local_dir) 
+          -localDevDir $(local_dev_dir) 
+          -includeDir $(include_dir) 
+
+      displayName: 'Compile with Invoke-MsBuild'
