@@ -44,7 +44,7 @@ cd %CSIRO_BITBUCKET%\cruise-control
 git checkout testing
 
 cd %GITHUB_REPOS%\vcpp-commons
-git checkout master
+git checkout testing
 
 @REM echo "TEMP TEST: just check out cruise control, then exit."
 @REM set exit_code=0
@@ -67,9 +67,6 @@ git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/swift.git
 
 cd %CSIRO_BITBUCKET%
 git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
-
-cd %CSIRO_BITBUCKET%
-git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
 
 cd %GITHUB_REPOS%
 git clone %GITHUB_REPO_ROOT%/moirai.git

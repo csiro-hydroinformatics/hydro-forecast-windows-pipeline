@@ -55,7 +55,7 @@ stages:
           # which 7z  : /c/ProgramData/Chocolatey/bin/7z
           7z x libs_third_party.7z 
           7z x include_third_party.7z 
-          mkdir -p $(local_dev_dir)
+          mkdir -p $(local_dev_dir)/libs/64
           # cd $(local_dev_dir)
           mkdir -p $(include_dir)
           exit 0
@@ -91,6 +91,9 @@ stages:
           -rootSrcDir $(root_src_dir) 
           -localDir $(local_dir) 
           -localDevDir $(local_dev_dir) 
-          -includeDir $(include_dir) 
-
+          -includeDir $(include_dir)
+      env:
+        # needed to override defaults in local_paths.props
+        RootLocalPath: $(local_dir)
+        RootLocalDevPath: $(local_dev_dir)
       displayName: 'Compile with Invoke-MsBuild'
