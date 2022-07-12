@@ -44,8 +44,8 @@ stages:
     - task: Bash@3
       inputs:
         targetType: 'inline'
+        # Retrieving unix paths caused grief. Very poor facilities, at the least badly documented.
         script: |
-          which wslpath
           function wslpath() { 
             echo "$1" | sed -e 's|\\|/|g' -e 's|^\([A-Za-z]\)\:/\(.*\)|/\L\1\E/\2|'
           }
@@ -69,40 +69,40 @@ stages:
           mkdir -p $include_dir_nix
           exit 0
       displayName: 'Install third party libraries and headers'
+    - script: |
+        call checkout.bat
+      env:
+        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+      displayName: check out sources
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
+        #arguments: > # Use this to avoid newline characters in multiline string
+        #  -input1 "Hello"
+        #  -input2 "World"
+      displayName: 'Setup Powershell with Invoke-MsBuild'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\make-props.ps1
+      displayName: 'Create user vcpp_config.props'
     # - script: |
-    #     call checkout.bat
+    #     call third-party-lib.bat
     #   env:
     #     SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-    #   displayName: check out sources
-    # - task: PowerShell@2
-    #   inputs:
-    #     targetType: 'filePath'
-    #     filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
-    #     #arguments: > # Use this to avoid newline characters in multiline string
-    #     #  -input1 "Hello"
-    #     #  -input2 "World"
-    #   displayName: 'Setup Powershell with Invoke-MsBuild'
-    # - task: PowerShell@2
-    #   inputs:
-    #     targetType: 'filePath'
-    #     filePath: $(Build.SourcesDirectory)\make-props.ps1
-    #   displayName: 'Create user vcpp_config.props'
-    # # - script: |
-    # #     call third-party-lib.bat
-    # #   env:
-    # #     SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-    # #   displayName: Install third party precompiled libraries boost and netcdf
-    # - task: PowerShell@2
-    #   inputs:
-    #     targetType: 'filePath'
-    #     filePath: $(Build.SourcesDirectory)\build-stack.ps1
-    #     arguments: > # Use this to avoid newline characters in multiline string
-    #       -rootSrcDir $(root_src_dir) 
-    #       -localDir $(local_dir) 
-    #       -localDevDir $(local_dev_dir) 
-    #       -includeDir $(include_dir)
-    #   env:
-    #     # needed to override defaults in local_paths.props
-    #     RootLocalPath: $(local_dir)
-    #     RootLocalDevPath: $(local_dev_dir)
-    #   displayName: 'Compile with Invoke-MsBuild'
+    #   displayName: Install third party precompiled libraries boost and netcdf
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\build-stack.ps1
+        arguments: > # Use this to avoid newline characters in multiline string
+          -rootSrcDir $(root_src_dir) 
+          -localDir $(local_dir) 
+          -localDevDir $(local_dev_dir) 
+          -includeDir $(include_dir)
+      env:
+        # needed to override defaults in local_paths.props
+        RootLocalPath: $(local_dir)
+        RootLocalDevPath: $(local_dev_dir)
+      displayName: 'Compile with Invoke-MsBuild'
