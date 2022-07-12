@@ -7,10 +7,10 @@ trigger:
 - main
 
 variables:
-  root_src_dir: $(Build.SourcesDirectory)/s
-  local_dir: $(Build.SourcesDirectory)/usr/local
-  local_dev_dir: $(Build.SourcesDirectory)/usr/localdev
-  include_dir: $(Build.SourcesDirectory)/usr/local/include
+  root_src_dir: $(Build.SourcesDirectory)\s
+  local_dir: $(Build.SourcesDirectory)\usr\local
+  local_dev_dir: $(Build.SourcesDirectory)\usr\localdev
+  include_dir: $(Build.SourcesDirectory)\usr\local\include
 
 stages:
 - stage: Build
@@ -45,26 +45,24 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          echo $(Build.SourcesDirectory)/data
-          # mkdir -p $(Build.SourcesDirectory)/data
-          # cd $(Build.SourcesDirectory)/data
-
-          function wslpath() { 
-            echo "$1" | sed -e 's|\\|/|g' -e 's|^\([A-Za-z]\)\:/\(.*\)|/\L\1\E/\2|'
-          }
-
-          wslpath $(local_dir)
-          mkdir -p $(local_dir)
-          cd $(local_dir)
+          root_src_dir_nix=$BUILD_SOURCESDIRECTORY/s
+          local_dir_nix=$BUILD_SOURCESDIRECTORY/usr/local
+          local_dev_dir_nix=$BUILD_SOURCESDIRECTORY/usr/localdev
+          include_dir_nix=$BUILD_SOURCESDIRECTORY/usr/local/include
+          echo root_src_dir_nix=$root_src_dir_nix
+          echo local_dir_nix=$local_dir_nix
+          echo local_dev_dir_nix=$local_dev_dir_nix
+          echo include_dir_nix=$include_dir_nix
+          mkdir -p $(local_dir_nix)
+          cd $(local_dir_nix)
+          echo currently under `pwd`
           curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
           curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/cl3QJ17UV5HJkzo/download
           # which 7z  : /c/ProgramData/Chocolatey/bin/7z
           7z x libs_third_party.7z 
           7z x include_third_party.7z 
-          mkdir -p $(local_dev_dir)/libs/64
-          wslpath $(local_dev_dir)/libs/64
-          # cd $(local_dev_dir)
-          mkdir -p $(include_dir)
+          mkdir -p $(local_dev_dir_nix)/libs/64
+          mkdir -p $(include_dir_nix)
           exit 0
       displayName: 'Install third party libraries and headers'
     # - script: |
