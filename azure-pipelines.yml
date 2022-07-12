@@ -6,7 +6,9 @@
 trigger:
 - main
 
-# TODO: test stage, or step if it is worth reusing the ubuntu vm (likely)
+variables:
+  local_dir: $(Build.SourcesDirectory)/usr/local
+
 stages:
 - stage: Build
   displayName: Build Stage
@@ -32,19 +34,43 @@ stages:
       displayName: 'Test: where repos are checked out'
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # echo $(Build.SourcesDirectory)/data
+          # mkdir -p $(Build.SourcesDirectory)/data
+          # cd $(Build.SourcesDirectory)/data
+          mkdir -p $(local_dir)
+          cd $(local_dir)
+          curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
+          curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/cl3QJ17UV5HJkzo/download
+          # which 7z  : /c/ProgramData/Chocolatey/bin/7z
+          7z x libs_third_party.7z 
+          7z x include_third_party.7z 
+          exit 0
+      displayName: 'Install third party libraries and headers'
     #- script: |
     #    call checkout.bat
     #  env:
     #    SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
     #  displayName: check out sources
-    #- task: PowerShell@2
-    #  inputs:
-    #    targetType: 'filePath'
-    #    filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
-    #    arguments: > # Use this to avoid newline characters in multiline string
-    #      -input1 "Hello"
-    #      -input2 "World"
-    #  displayName: 'Setup Powershell with Invoke-MsBuild'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
+        #arguments: > # Use this to avoid newline characters in multiline string
+        #  -input1 "Hello"
+        #  -input2 "World"
+      displayName: 'Setup Powershell with Invoke-MsBuild'
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)\make-props.ps1
+        #arguments: > # Use this to avoid newline characters in multiline string
+        #  -input1 "Hello"
+        #  -input2 "World"
+      displayName: 'Create user vcpp_config.props'
     # - script: |
     #     call third-party-lib.bat
     #   env:
@@ -58,18 +84,3 @@ stages:
     #       -input1 "Hello"
     #       -input2 "World"
     #   displayName: 'Compile with Invoke-MsBuild'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          echo where is curl?
-          which curl
-          mkdir -p $(Build.SourcesDirectory)/data
-          cd $(Build.SourcesDirectory)/data
-          curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
-          echo where is 7z?
-          which 7zr
-          which 7z
-          which 7za
-          exit 0
-      displayName: 'Checks what is in bash'

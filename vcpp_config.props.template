@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="VersionedSourceCode">
+    <Import Project="ROOT_SRC_DIR\vcpp-commons\config\vcpp_config.props" Condition="exists('ROOT_SRC_DIR\vcpp-commons\config\vcpp_config.props')" />
+  </ImportGroup>
+ </Project>
