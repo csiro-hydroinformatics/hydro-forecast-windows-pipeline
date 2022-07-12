@@ -32,19 +32,19 @@ stages:
       displayName: 'Test: where repos are checked out'
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-    - script: |
-        call checkout.bat
-      env:
-        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-      displayName: check out sources
-    - task: PowerShell@2
-      inputs:
-        targetType: 'filePath'
-        filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
-        arguments: > # Use this to avoid newline characters in multiline string
-          -input1 "Hello"
-          -input2 "World"
-      displayName: 'Setup Powershell with Invoke-MsBuild'
+    #- script: |
+    #    call checkout.bat
+    #  env:
+    #    SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+    #  displayName: check out sources
+    #- task: PowerShell@2
+    #  inputs:
+    #    targetType: 'filePath'
+    #    filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
+    #    arguments: > # Use this to avoid newline characters in multiline string
+    #      -input1 "Hello"
+    #      -input2 "World"
+    #  displayName: 'Setup Powershell with Invoke-MsBuild'
     # - script: |
     #     call third-party-lib.bat
     #   env:
@@ -64,6 +64,12 @@ stages:
         script: |
           echo where is curl?
           which curl
+          mkdir -p $(Build.SourcesDirectory)/data
+          cd $(Build.SourcesDirectory)/data
+          curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
           echo where is 7z?
           which 7zr
+          which 7z
+          which 7za
+          exit 0
       displayName: 'Checks what is in bash'
