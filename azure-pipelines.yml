@@ -60,11 +60,11 @@ stages:
           mkdir -p $(include_dir)
           exit 0
       displayName: 'Install third party libraries and headers'
-    #- script: |
-    #    call checkout.bat
-    #  env:
-    #    SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-    #  displayName: check out sources
+    - script: |
+        call checkout.bat
+      env:
+        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+      displayName: check out sources
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
@@ -88,7 +88,7 @@ stages:
         targetType: 'filePath'
         filePath: $(Build.SourcesDirectory)\build-stack.ps1
         arguments: > # Use this to avoid newline characters in multiline string
-          -rootSrcDir $(rootSrcDir) 
+          -rootSrcDir $(root_src_dir) 
           -localDir $(local_dir) 
           -localDevDir $(local_dev_dir) 
           -includeDir $(include_dir) 
