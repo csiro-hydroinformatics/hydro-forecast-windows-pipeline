@@ -26,6 +26,9 @@ stages:
         echo BUILD_SOURCESDIRECTORY=%BUILD_SOURCESDIRECTORY%
         echo
         if defined SWIFT_PAT_ENV_VAR echo "SWIFT_PAT is defined"
+        echo 
+        echo Bash is located at:
+        where bash
       displayName: 'Test: where repos are checked out'
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
@@ -42,3 +45,25 @@ stages:
           -input1 "Hello"
           -input2 "World"
       displayName: 'Setup Powershell with Invoke-MsBuild'
+    # - script: |
+    #     call third-party-lib.bat
+    #   env:
+    #     SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+    #   displayName: Install third party precompiled libraries boost and netcdf
+    # - task: PowerShell@2
+    #   inputs:
+    #     targetType: 'filePath'
+    #     filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
+    #     arguments: > # Use this to avoid newline characters in multiline string
+    #       -input1 "Hello"
+    #       -input2 "World"
+    #   displayName: 'Compile with Invoke-MsBuild'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo where is curl?
+          which curl
+          echo where is 7z?
+          which 7zr
+      displayName: 'Checks what is in bash'

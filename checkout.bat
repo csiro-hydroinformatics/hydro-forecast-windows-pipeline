@@ -35,12 +35,22 @@ set GITHUB_REPOS=%OUR_SRC_DIR%
 set exit_code=0
 
 cd %CSIRO_BITBUCKET%
+git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
+cd %CSIRO_BITBUCKET%\cruise-control
+git checkout testing
+
+echo "TEMP TEST: just check out cruise control, then exit."
+set exit_code=0
+goto exit
+
+cd %CSIRO_BITBUCKET%
 git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/numerical-sl-cpp.git
 if %errorlevel% neq 0 ( 
     echo "ERROR: numerical-sl-cpp checkout failed"
     set exit_code=1
     goto exit
 )
+
 
 cd %CSIRO_BITBUCKET%
 git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/datatypes.git
