@@ -1,5 +1,5 @@
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+# Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
 # https://www.powershellgallery.com/packages/Invoke-MsBuild/2.7.1
 Install-Module -Name Invoke-MsBuild -Scope CurrentUser
