@@ -44,15 +44,15 @@ stages:
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
     - script: |
-        mkdir %local_dir%
+        if not exist %local_dir% mkdir %local_dir%
+        if not exist %include_dir% mkdir %include_dir%
+        if not exist %local_dev_dir%\libs\64 mkdir %local_dev_dir%\libs\64
         cd %local_dir%
         curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
         curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/cl3QJ17UV5HJkzo/download
         # which 7z  : /c/ProgramData/Chocolatey/bin/7z
         7z x libs_third_party.7z 
         7z x include_third_party.7z 
-        mkdir %local_dev_dir%/libs/64
-        mkdir %include_dir%
       displayName: 'Install third party libraries and headers'
     # - task: Bash@3
     #   inputs:
