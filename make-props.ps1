@@ -4,15 +4,16 @@
 
 # Note: Powershell 6 and above supposed to handle more than 2 args, and should with windows-2019 VM, but pipeline then fails
 
+$OUR_SRC_DIR = Join-Path $env:BUILD_SOURCESDIRECTORY 's'
+
 $target_file = Join-Path $env:USERPROFILE 'Documents\moirai.props'
 
-$template_file = Join-Path $env:BUILD_SOURCESDIRECTORY 'moirai\tests\moirai.props.in'
+$template_file = Join-Path $OUR_SRC_DIR 'moirai\tests\moirai.props.in'
 
 Copy-Item $template_file -Destination $target_file
 
 # Swift stack
 
-$OUR_SRC_DIR = Join-Path $env:BUILD_SOURCESDIRECTORY 's'
 
 $target_file = Join-Path $env:USERPROFILE 'vcpp_config.props'
 
