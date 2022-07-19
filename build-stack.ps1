@@ -50,6 +50,35 @@ $myPsBatchBuildPath = Get-PSBatchBuildPath -GithubRepoDir $githubRepoDir
 Import-Module -Name $myPsBatchBuildPath -Verbose 
 
 
+### Header-only copies
+
+# threadpool headers are an addition to boost
+$threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
+$boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
+# Threadpool needed by wila and swift:
+Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
+
+h_file = (Join-Path $includeDir 'boost/threadpool.hpp')
+if (Test-Path $h_file -PathType Leaf)
+{
+    echo ("HACK: file found " + $h_file)
+} else {
+    echo ("HACK: file not found " + $h_file)
+}
+
+# SFSL needed by swift
+$sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
+Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
+Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
+
+h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
+if (Test-Path $h_file -PathType Leaf)
+{
+    echo ("HACK: file found " + $h_file)
+} else {
+    echo ("HACK: file not found " + $h_file)
+}
+
 # Build-DeployFullStack
 
 # Compile and install the base libraries of our stack, that depend only on well known libs such as boost:
@@ -74,12 +103,6 @@ $headerDirectories[$cinteropLibName] = (Join-Path $githubRepoDir 'rcpp-interop-c
 
 Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
-# threadpool headers are an addition to boost
-$threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
-$boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
-# Threadpool needed by wila and swift:
-Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
-
 ########## Level two - datatypes
 $headerDirectories = @{}
 $headerDirectories[$datatypesLibName] = (Join-Path $csiroBitbucket 'datatypes\datatypes\include\datatypes')
@@ -94,11 +117,6 @@ Install-SharedLibsMultiCfg -Solutions $lvlTwoSlns -LibsDirs $libsDirs -BuildPlat
 # common.cpp(1): fatal error C1083: Cannot open include file: 'boost/algorithm/string/join.hpp': No such file or directory
 # <Import Project="$(UserProfile)/vcpp_config.props" Condition="exists('$(UserProfile)/vcpp_config.props')" />
 # Follow instructions in C:\src\github_jm\vcpp-commons\README.md
-
-# SFSL needed by swift
-$sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
-Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
-Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
 
 ########## Level three, swift, RPP.
 
