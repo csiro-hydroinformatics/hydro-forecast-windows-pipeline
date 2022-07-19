@@ -1,3 +1,14 @@
+# Set up property sheets files shared by vc++ project files
+
+# Moirai:
+
+$target_file = Join-Path $env:USERPROFILE 'Documents' 'moirai.props'
+
+$template_file = Join-Path $env:BUILD_SOURCESDIRECTORY 'moirai' 'tests' 'moirai.props.in'
+
+Copy-Item $template_file -Destination $target_file
+
+# Swift stack
 
 $OUR_SRC_DIR = Join-Path $env:BUILD_SOURCESDIRECTORY 's'
 
@@ -10,3 +21,4 @@ Write-Host $target_file
 ((Get-Content -path $template_file -Raw) -replace 'ROOT_SRC_DIR', $OUR_SRC_DIR) | Set-Content -Path $target_file
 
 Get-Content -path $target_file | Write-Host
+
