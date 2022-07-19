@@ -2,9 +2,11 @@
 
 # Moirai:
 
-$target_file = Join-Path $env:USERPROFILE 'Documents' 'moirai.props'
+# Note: Powershell 6 and above supposed to handle more than 2 args, and should with windows-2019 VM, but pipeline then fails
 
-$template_file = Join-Path $env:BUILD_SOURCESDIRECTORY 'moirai' 'tests' 'moirai.props.in'
+$target_file = Join-Path $env:USERPROFILE 'Documents\moirai.props'
+
+$template_file = Join-Path $env:BUILD_SOURCESDIRECTORY 'moirai\tests\moirai.props.in'
 
 Copy-Item $template_file -Destination $target_file
 
