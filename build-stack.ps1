@@ -58,7 +58,7 @@ $boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
 # Threadpool needed by wila and swift:
 Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
 
-h_file = (Join-Path $includeDir 'boost/threadpool.hpp')
+$h_file = (Join-Path $includeDir 'boost\threadpool.hpp')
 if (Test-Path $h_file -PathType Leaf)
 {
     echo ("HACK: file found " + $h_file)
@@ -71,7 +71,7 @@ $sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
 Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
 Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
 
-h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
+$h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
 if (Test-Path $h_file -PathType Leaf)
 {
     echo ("HACK: file found " + $h_file)
