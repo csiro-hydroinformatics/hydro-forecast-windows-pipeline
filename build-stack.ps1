@@ -78,7 +78,6 @@ Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 $threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
 $boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
 # Threadpool needed by wila and swift. No makefile target for install, so:
-$SUDO_CMD cp -R boost ${INSTALL_PREFIX}/include/
 Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
 
 ########## Level two - datatypes
