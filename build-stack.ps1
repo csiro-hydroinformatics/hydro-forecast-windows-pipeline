@@ -75,6 +75,12 @@ $headerDirectories[$cinteropLibName] = (Join-Path $githubRepoDir 'rcpp-interop-c
 Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 ########## Level two - datatypes
+$headerDirectories = @{}
+# TODO SFSL but this is a tad tricky?
+# $headerDirectories[$sfslLibName] = (Join-Path $csiroBitbucket 'numerical-sl-cpp\math\include\sfsl')
+$headerDirectories[$datatypesLibName] = (Join-Path $csiroBitbucket 'datatypes\datatypes\include\datatypes')
+Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
+
 $lvlTwoSlns = @{}
 $lvlTwoSlns[$datatypesLibName] = (Join-Path $csiroBitbucket 'datatypes\Solutions\DataTypes.sln')
 $lvlTwoLibnames = @($datatypesLibName)
@@ -83,12 +89,6 @@ Install-SharedLibsMultiCfg -Solutions $lvlTwoSlns -LibsDirs $libsDirs -BuildPlat
 # common.cpp(1): fatal error C1083: Cannot open include file: 'boost/algorithm/string/join.hpp': No such file or directory
 # <Import Project="$(UserProfile)/vcpp_config.props" Condition="exists('$(UserProfile)/vcpp_config.props')" />
 # Follow instructions in C:\src\github_jm\vcpp-commons\README.md
-
-$headerDirectories = @{}
-# TODO SFSL but this is a tad tricky?
-# $headerDirectories[$sfslLibName] = (Join-Path $csiroBitbucket 'numerical-sl-cpp\math\include\sfsl')
-$headerDirectories[$datatypesLibName] = (Join-Path $csiroBitbucket 'datatypes\datatypes\include\datatypes')
-Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 ########## Level three, swift, RPP.
 
@@ -125,6 +125,9 @@ Install-SharedLibsMultiCfg -Solutions $lvlThreeSlns -LibsDirs $libsDirs -BuildPl
 # Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 ########## Level four, QPP depends on swift...
+$headerDirectories = @{}
+$headerDirectories[$qppLibName] = (Join-Path $csiroBitbucket 'qpp\libqpp\include\qpp')
+Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 $qppcoreLibName = 'qppcore'
 $qppLibName = 'qpp'
@@ -136,7 +139,4 @@ $lvlFourLibnames = @($qppLibName, $qppcoreLibName)
 
 Install-SharedLibsMultiCfg -Solutions $lvlFourSlns -LibsDirs $libsDirs -BuildPlatforms $buildPlatforms -BuildMode $buildMode -ToolsVersion $toolsVersion -LibNames $lvlFourLibnames 
 
-$headerDirectories = @{}
-$headerDirectories[$qppLibName] = (Join-Path $csiroBitbucket 'qpp\libqpp\include\qpp')
-Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
