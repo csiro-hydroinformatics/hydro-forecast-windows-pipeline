@@ -77,13 +77,11 @@ Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 # threadpool headers are an addition to boost
 $threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
 $boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
-# Threadpool needed by wila and swift. No makefile target for install, so:
+# Threadpool needed by wila and swift:
 Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
 
 ########## Level two - datatypes
 $headerDirectories = @{}
-# TODO SFSL but this is a tad tricky?
-# $headerDirectories[$sfslLibName] = (Join-Path $csiroBitbucket 'numerical-sl-cpp\math\include\sfsl')
 $headerDirectories[$datatypesLibName] = (Join-Path $csiroBitbucket 'datatypes\datatypes\include\datatypes')
 Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
@@ -91,10 +89,16 @@ $lvlTwoSlns = @{}
 $lvlTwoSlns[$datatypesLibName] = (Join-Path $csiroBitbucket 'datatypes\Solutions\DataTypes.sln')
 $lvlTwoLibnames = @($datatypesLibName)
 
+
 Install-SharedLibsMultiCfg -Solutions $lvlTwoSlns -LibsDirs $libsDirs -BuildPlatforms $buildPlatforms -BuildMode $buildMode -ToolsVersion $toolsVersion -LibNames $lvlTwoLibnames 
 # common.cpp(1): fatal error C1083: Cannot open include file: 'boost/algorithm/string/join.hpp': No such file or directory
 # <Import Project="$(UserProfile)/vcpp_config.props" Condition="exists('$(UserProfile)/vcpp_config.props')" />
 # Follow instructions in C:\src\github_jm\vcpp-commons\README.md
+
+# SFSL needed by swift
+$sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
+Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
+Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
 
 ########## Level three, swift, RPP.
 
