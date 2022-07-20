@@ -8,8 +8,14 @@ if not defined SWIFT_PAT_ENV_VAR (
     goto exit
 ) 
 
+if not defined root_src_dir ( 
+    echo "ERROR: root_src_dir not defined"
+    set exit_code=1
+    goto exit
+) 
+
 set SWIFT_PAT=%SWIFT_PAT_ENV_VAR%
-set OUR_SRC_DIR=%BUILD_SOURCESDIRECTORY%\s
+set OUR_SRC_DIR=%root_src_dir%
 
 if not exist %OUR_SRC_DIR% mkdir %OUR_SRC_DIR%
 
@@ -35,10 +41,10 @@ set GITHUB_REPOS=%OUR_SRC_DIR%
 set exit_code=0
 
 cd %CSIRO_BITBUCKET%
-git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
+if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/vcpp-commons
+if not exist vcpp-commons git clone %GITHUB_REPO_ROOT%/vcpp-commons
 
 cd %CSIRO_BITBUCKET%\cruise-control
 git checkout testing
@@ -51,7 +57,7 @@ git checkout testing
 @REM goto exit
 
 cd %CSIRO_BITBUCKET%
-git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/numerical-sl-cpp.git
+if not exist numerical-sl-cpp git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/numerical-sl-cpp.git
 if %errorlevel% neq 0 ( 
     echo "ERROR: numerical-sl-cpp checkout failed"
     set exit_code=1
@@ -60,13 +66,13 @@ if %errorlevel% neq 0 (
 
 
 cd %CSIRO_BITBUCKET%
-git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/datatypes.git
+if not exist datatypes git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/datatypes.git
 
 cd %CSIRO_BITBUCKET%
-git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/swift.git
+if not exist swift git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/swift.git
 
 cd %CSIRO_BITBUCKET%
-git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
+if not exist qpp git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
 
 cd %GITHUB_REPOS%
 git clone %GITHUB_REPO_ROOT%/moirai.git
@@ -77,32 +83,31 @@ if %errorlevel% neq 0 (
 )
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/rcpp-interop-commons.git
+if not exist rcpp-interop-commons git clone %GITHUB_REPO_ROOT%/rcpp-interop-commons.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/threadpool.git
+if not exist threadpool git clone %GITHUB_REPO_ROOT%/threadpool.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/wila.git
+if not exist wila git clone %GITHUB_REPO_ROOT%/wila.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/config-utils.git
+if not exist config-utils git clone %GITHUB_REPO_ROOT%/config-utils.git
 
 :: # OPTIONAL if needed to generate code for e.g. R package:
 @REM git clone %GITHUB_REPO_ROOT%/c-api-wrapper-generation.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_JM_REPO_ROOT%/yaml-cpp.git
+if not exist yaml-cpp git clone %GITHUB_JM_REPO_ROOT%/yaml-cpp.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
+if not exist jsoncpp git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/efts.git
+if not exist efts git clone %GITHUB_REPO_ROOT%/efts.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/pyrefcount.git
-
+if not exist pyrefcount git clone %GITHUB_REPO_ROOT%/pyrefcount.git
 
 cd %CSIRO_BITBUCKET%\numerical-sl-cpp
 git checkout testing

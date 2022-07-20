@@ -5,9 +5,9 @@ param(
     [string]$includeDir = 'c:\local\include'
 )
 
-if (Test-Path $includeDir -eq $false)
+if ((Test-Path $includeDir) -eq $false)
 {
-    echo ("WARNING: includes directory not found: " + $includeDir)
+    Write-Output ("WARNING: includes directory not found: " + $includeDir)
     New-Item -ItemType Directory -Force -Path $includeDir
 }
 
@@ -67,9 +67,9 @@ Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost')
 $h_file = (Join-Path $includeDir 'boost\threadpool.hpp')
 if (Test-Path $h_file -PathType Leaf)
 {
-    echo ("HACK: file found " + $h_file)
+    Write-Output ("HACK: file found " + $h_file)
 } else {
-    echo ("HACK: file not found " + $h_file)
+    Write-Output ("HACK: file not found " + $h_file)
 }
 
 # SFSL needed by swift
@@ -80,9 +80,9 @@ Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path
 $h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
 if (Test-Path $h_file -PathType Leaf)
 {
-    echo ("HACK: file found " + $h_file)
+    Write-Output ("HACK: file found " + $h_file)
 } else {
-    echo ("HACK: file not found " + $h_file)
+    Write-Output ("HACK: file not found " + $h_file)
 }
 
 # Build-DeployFullStack

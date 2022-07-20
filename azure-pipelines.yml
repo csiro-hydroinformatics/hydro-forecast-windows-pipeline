@@ -7,6 +7,8 @@ trigger:
 - main
 
 variables:
+  # use pipeline_src_dir to facilitate testing out of Azure Pipeline
+  pipeline_src_dir: $(Build.SourcesDirectory)
   root_src_dir: $(Build.SourcesDirectory)\s
   local_dir: $(Build.SourcesDirectory)\usr\local
   local_dev_dir: $(Build.SourcesDirectory)\usr\localdev
@@ -94,14 +96,13 @@ stages:
       inputs:
         targetType: 'filePath'
         filePath: $(Build.SourcesDirectory)\pwsh-setup.ps1
-        #arguments: > # Use this to avoid newline characters in multiline string
-        #  -input1 "Hello"
-        #  -input2 "World"
+        pwsh: true
       displayName: 'Setup Powershell with Invoke-MsBuild'
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
         filePath: $(Build.SourcesDirectory)\make-props.ps1
+        pwsh: true
       displayName: 'Create user vcpp_config.props'
     # - script: |
     #     call third-party-lib.bat
@@ -112,6 +113,7 @@ stages:
       inputs:
         targetType: 'filePath'
         filePath: $(Build.SourcesDirectory)\build-stack.ps1
+        pwsh: true
         arguments: > # Use this to avoid newline characters in multiline string
           -rootSrcDir $(root_src_dir) 
           -localDir $(local_dir) 
