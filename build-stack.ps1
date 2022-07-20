@@ -5,6 +5,12 @@ param(
     [string]$includeDir = 'c:\local\include'
 )
 
+if (Test-Path $includeDir -eq $false)
+{
+    echo ("WARNING: includes directory not found: " + $includeDir)
+    New-Item -ItemType Directory -Force -Path $includeDir
+}
+
 $githubRepoDir = $rootSrcDir
 $csiroBitbucket = $rootSrcDir
 

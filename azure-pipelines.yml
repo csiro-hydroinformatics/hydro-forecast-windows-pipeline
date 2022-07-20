@@ -11,6 +11,9 @@ variables:
   local_dir: $(Build.SourcesDirectory)\usr\local
   local_dev_dir: $(Build.SourcesDirectory)\usr\localdev
   include_dir: $(Build.SourcesDirectory)\usr\local\include
+  # and define these to override the defaults in local_paths.props from vcpp-commons
+  RootLocalPath: $(Build.SourcesDirectory)\usr\local
+  RootLocalDevPath: $(Build.SourcesDirectory)\usr\localdev
 
 stages:
 - stage: Build
