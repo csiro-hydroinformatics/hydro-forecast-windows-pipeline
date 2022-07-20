@@ -62,7 +62,7 @@ Import-Module -Name $myPsBatchBuildPath -Verbose
 $threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
 $boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
 # Threadpool needed by wila and swift:
-Copy-Item -Path $boostThreadpoolDir -Destination $includeDir -Recurse
+Copy-Item -Path $boostThreadpoolDir -Destination $includeDir -Recurse -Force
 
 $h_file = (Join-Path $includeDir 'boost\threadpool.hpp')
 if (Test-Path $h_file -PathType Leaf)
@@ -74,8 +74,8 @@ if (Test-Path $h_file -PathType Leaf)
 
 # SFSL needed by swift
 $sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
-Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination $includeDir -Recurse
-Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination $includeDir -Recurse
+Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination $includeDir -Recurse -Force
+Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination $includeDir -Recurse -Force
 
 $h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
 if (Test-Path $h_file -PathType Leaf)
