@@ -5,11 +5,11 @@ param(
     [string]$includeDir = 'c:\local\include'
 )
 
-# if (Test-Path $includeDir -eq $false)
-# {
-    # echo ("WARNING: includes directory not found: " + $includeDir)
-    # New-Item -ItemType Directory -Force -Path $includeDir
-# }
+if ((Test-Path $includeDir) -eq $false)
+{
+    echo ("WARNING: includes directory not found: " + $includeDir + ". I will create it but expected it already")
+    New-Item -ItemType Directory -Force -Path $includeDir
+}
 
 $githubRepoDir = $rootSrcDir
 $csiroBitbucket = $rootSrcDir
@@ -62,7 +62,7 @@ Import-Module -Name $myPsBatchBuildPath -Verbose
 $threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
 $boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
 # Threadpool needed by wila and swift:
-Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
+Copy-Item -Path $boostThreadpoolDir -Destination $includeDir -Recurse
 
 $h_file = (Join-Path $includeDir 'boost\threadpool.hpp')
 if (Test-Path $h_file -PathType Leaf)
@@ -74,8 +74,8 @@ if (Test-Path $h_file -PathType Leaf)
 
 # SFSL needed by swift
 $sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
-Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
-Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
+Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination $includeDir -Recurse
+Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination $includeDir -Recurse
 
 $h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
 if (Test-Path $h_file -PathType Leaf)
