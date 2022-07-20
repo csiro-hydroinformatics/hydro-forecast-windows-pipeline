@@ -159,12 +159,13 @@ Install-SharedLibsMultiCfg -Solutions $lvlThreeSlns -LibsDirs $libsDirs -BuildPl
 # Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 ########## Level four, QPP depends on swift...
+$qppcoreLibName = 'qppcore'
+$qppLibName = 'qpp'
+
 $headerDirectories = @{}
 $headerDirectories[$qppLibName] = (Join-Path $csiroBitbucket 'qpp\libqpp\include\qpp')
 Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
-$qppcoreLibName = 'qppcore'
-$qppLibName = 'qpp'
 $lvlFourSlns = @{}
 # Using two solution files is a bit of a workaround the assumption that one dll of interest means one solution.
 $lvlFourSlns[$qppcoreLibName] = (Join-Path $csiroBitbucket 'qpp\solutions\qpp\qppcore.sln')
