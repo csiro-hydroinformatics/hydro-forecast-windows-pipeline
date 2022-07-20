@@ -7,7 +7,7 @@ param(
 
 if ((Test-Path $includeDir) -eq $false)
 {
-    Write-Output ("WARNING: includes directory not found: " + $includeDir)
+    Write-Output ("WARNING: includes directory not found: " + $includeDir + ". I will create it but expected it already")
     New-Item -ItemType Directory -Force -Path $includeDir
 }
 
@@ -62,7 +62,7 @@ Import-Module -Name $myPsBatchBuildPath -Verbose
 $threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
 $boostThreadpoolDir = (Join-Path $threadpoolDir 'boost')
 # Threadpool needed by wila and swift:
-Copy-Item -Path $boostThreadpoolDir -Destination (Join-Path $includeDir 'boost') -Recurse
+Copy-Item -Path $boostThreadpoolDir -Destination $includeDir -Recurse -Force
 
 $h_file = (Join-Path $includeDir 'boost\threadpool.hpp')
 if (Test-Path $h_file -PathType Leaf)
@@ -74,8 +74,8 @@ if (Test-Path $h_file -PathType Leaf)
 
 # SFSL needed by swift
 $sfslDir = (Join-Path $csiroBitbucket 'numerical-sl-cpp')
-Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
-Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination (Join-Path $includeDir 'sfsl') -Recurse
+Copy-Item -Path (Join-Path $sfslDir 'algorithm\include\sfsl') -Destination $includeDir -Recurse -Force
+Copy-Item -Path (Join-Path $sfslDir 'math\include\sfsl') -Destination $includeDir -Recurse -Force
 
 $h_file = (Join-Path $includeDir 'sfsl\math\transforms.hpp')
 if (Test-Path $h_file -PathType Leaf)
@@ -159,12 +159,13 @@ Install-SharedLibsMultiCfg -Solutions $lvlThreeSlns -LibsDirs $libsDirs -BuildPl
 # Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 ########## Level four, QPP depends on swift...
+$qppcoreLibName = 'qppcore'
+$qppLibName = 'qpp'
+
 $headerDirectories = @{}
 $headerDirectories[$qppLibName] = (Join-Path $csiroBitbucket 'qpp\libqpp\include\qpp')
 Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
-$qppcoreLibName = 'qppcore'
-$qppLibName = 'qpp'
 $lvlFourSlns = @{}
 # Using two solution files is a bit of a workaround the assumption that one dll of interest means one solution.
 $lvlFourSlns[$qppcoreLibName] = (Join-Path $csiroBitbucket 'qpp\solutions\qpp\qppcore.sln')
