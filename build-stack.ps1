@@ -5,6 +5,8 @@ param(
     [string]$includeDir = 'c:\local\include'
 )
 
+# Foreword: moirai tests require https://dotnet.microsoft.com/en-us/download/dotnet-framework/net472
+
 if ((Test-Path $includeDir) -eq $false)
 {
     Write-Output ("WARNING: includes directory not found: " + $includeDir + ". I will create it but expected it already")

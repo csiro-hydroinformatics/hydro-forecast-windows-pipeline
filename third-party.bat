@@ -24,7 +24,9 @@ if not defined local_dev_dir (
 if not exist %local_dir% mkdir %local_dir%
 if not exist %include_dir% mkdir %include_dir%
 if not exist %local_dev_dir%\libs\64 mkdir %local_dev_dir%\libs\64
+
 cd %local_dir%
+
 curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
@@ -56,6 +58,6 @@ if %errorlevel% neq 0 (
 if !exit_code! neq 0 (
     echo ERROR: %error_msg%
 ) else (
-    echo INFO: completed without error
+    echo INFO: third-party completed without error
 )
 exit /b !exit_code!
