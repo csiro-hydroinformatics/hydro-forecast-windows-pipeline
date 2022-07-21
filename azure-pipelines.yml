@@ -51,6 +51,7 @@ stages:
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
     - script: |
+        call dos-setup.bat
         call third-party.bat
       displayName: 'Install third party libraries and headers'
     # - task: Bash@3
@@ -82,11 +83,13 @@ stages:
     #       exit 0
     #   displayName: 'Install third party libraries and headers'
     - script: |
+        call dos-setup.bat
         call checkout.bat
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
       displayName: check out sources
     - script: |
+        call dos-setup.bat
         call test-setupdev.bat
       displayName: 'TEST: check cruise-control setup_dev upfront'
     - task: PowerShell@2
@@ -122,8 +125,10 @@ stages:
         RootLocalDevPath: $(local_dev_dir)
       displayName: 'Compile with Invoke-MsBuild'
     - script: |
+        call dos-setup.bat
         call fetch-sample-data.bat
       displayName: 'Fetch unit test and documentation sample data'
     - script: |
+        call dos-setup.bat
         call library-tests.bat
       displayName: 'Run unit tests on the native libraries'
