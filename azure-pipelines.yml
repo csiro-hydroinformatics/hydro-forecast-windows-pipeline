@@ -132,3 +132,7 @@ stages:
         call dos-setup.bat
         call library-tests.bat
       displayName: 'Run unit tests on the native libraries'
+    - script: |
+        call dos-setup.bat
+        call zip-libraries.bat
+      displayName: 'Create zip files of native libraries'

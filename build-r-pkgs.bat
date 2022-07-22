@@ -21,6 +21,9 @@ call %cc_script_dir%\check_library_path.cmd
     goto exit
 )
 
+if not defined INCLUDE_PATH set INCLUDE_PATH=%local_dir%\include
+if not defined SWIFT_SAMPLE_DATA_DIR set SWIFT_SAMPLE_DATA_DIR=%root_data_dir%\documentation
+
 @set ModeUnitTests=Release
 @set PlatformUnitTests=x64
 call %cc_script_dir%\setup_dev Default 64
