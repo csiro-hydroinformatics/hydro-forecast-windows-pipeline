@@ -41,13 +41,13 @@ if %errorlevel% neq 0 (
     goto exit
 )
 
-7z x libs_third_party.7z 
+7z x -y libs_third_party.7z 
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=libs_third_party.7z extraction failed
     goto exit
 )
-7z x include_third_party.7z 
+7z x -y include_third_party.7z 
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=include_third_party.7z extraction failed

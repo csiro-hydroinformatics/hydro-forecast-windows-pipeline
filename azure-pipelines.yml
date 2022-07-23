@@ -77,8 +77,8 @@ stages:
     #       curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
     #       curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/cl3QJ17UV5HJkzo/download
     #       # which 7z  : /c/ProgramData/Chocolatey/bin/7z
-    #       7z x libs_third_party.7z 
-    #       7z x include_third_party.7z 
+    #       7z x -y libs_third_party.7z 
+    #       7z x -y include_third_party.7z 
     #       mkdir -p $local_dev_dir_nix/libs/64
     #       mkdir -p $include_dir_nix
     #       exit 0

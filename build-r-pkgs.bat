@@ -40,7 +40,8 @@ set rlib_nix=%rlib_dos:\=/%
 set R_LIBS_SITE=%rlib_nix%                                  
 
 set RCMD_BUILD_OPT_NO_VIGNETTE=--no-build-vignettes
-call %cc_script_dir%\build_r_packages.cmd %RCMD_BUILD_OPT_NO_VIGNETTE%
+@REM call %cc_script_dir%\build_r_packages.cmd %RCMD_BUILD_OPT_NO_VIGNETTE%
+call %cc_script_dir%\build_r_packages.cmd
 @if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=build_r_packages failed 

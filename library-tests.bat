@@ -1,7 +1,7 @@
 @echo off
 
-echo WARNING: 2022-07-22 do_unit_tests temporarily skipped during pipeline development 
-exit /b 0
+@REM echo WARNING: 2022-07-22 do_unit_tests temporarily skipped during pipeline development 
+@REM exit /b 0
 
 @set exit_code=0
 @set error_msg=""

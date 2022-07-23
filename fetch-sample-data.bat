@@ -20,7 +20,7 @@ if %errorlevel% neq 0 (
     goto exit
 )
 
-7z x swift_test_data.7z 
+7z x -y swift_test_data.7z 
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=swift_test_data.7z extraction failed
