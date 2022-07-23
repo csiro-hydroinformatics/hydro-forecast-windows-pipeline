@@ -75,11 +75,13 @@ cd %CSIRO_BITBUCKET%
 if not exist qpp git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
 
 cd %GITHUB_REPOS%
-git clone %GITHUB_REPO_ROOT%/moirai.git
-if %errorlevel% neq 0 ( 
-    echo "ERROR: moirai checkout failed"
-    set exit_code=1
-    goto exit
+if not exist moirai (
+    git clone %GITHUB_REPO_ROOT%/moirai.git
+    if %errorlevel% neq 0 ( 
+        echo "ERROR: moirai checkout failed"
+        set exit_code=1
+        goto exit
+    )
 )
 
 cd %GITHUB_REPOS%
@@ -107,14 +109,22 @@ cd %GITHUB_REPOS%
 if not exist efts git clone %GITHUB_REPO_ROOT%/efts.git
 
 cd %GITHUB_REPOS%
+if not exist efts-python git clone %GITHUB_REPO_ROOT%/efts-python.git
+
+cd %GITHUB_REPOS%
+if not exist mhplot git clone %GITHUB_REPO_ROOT%/mhplot.git
+
+cd %GITHUB_REPOS%
 if not exist pyrefcount git clone %GITHUB_REPO_ROOT%/pyrefcount.git
 
-cd %CSIRO_BITBUCKET%\numerical-sl-cpp
-git checkout testing
-if %errorlevel% neq 0 ( 
-    echo "ERROR: numerical-sl-cpp branch checkout failed"
-    set exit_code=1
-    goto exit
+if not exist numerical-sl-cpp (
+    cd %CSIRO_BITBUCKET%\numerical-sl-cpp
+    git checkout testing
+    if %errorlevel% neq 0 ( 
+        echo "ERROR: numerical-sl-cpp branch checkout failed"
+        set exit_code=1
+        goto exit
+    )
 )
 cd %CSIRO_BITBUCKET%\datatypes
 git checkout experimental
@@ -137,6 +147,10 @@ git checkout yaml_swift_experimental
 cd %GITHUB_REPOS%\jsoncpp
 git checkout custom/experimental
 cd %GITHUB_REPOS%\efts
+git checkout testing
+cd %GITHUB_REPOS%\efts-python
+git checkout testing
+cd %GITHUB_REPOS%\mhplot
 git checkout master
 
 

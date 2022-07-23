@@ -57,8 +57,23 @@ Import-Module -Name $myPSMakePath -Verbose
 $myPsBatchBuildPath = Get-PSBatchBuildPath -GithubRepoDir $githubRepoDir
 Import-Module -Name $myPsBatchBuildPath -Verbose 
 
-
 ### Header-only copies
+# catch.hpp and related 
+# mkdir -p ${INSTALL_PREFIX}/include/catch
+# $SUDO_CMD cp /usr/include/catch.hpp ${INSTALL_PREFIX}/include/catch/
+# $SUDO_CMD cp ${GITHUB_REPOS}/config-utils/catch/include/catch/catch_macros.hpp ${INSTALL_PREFIX}/include/catch/
+$catchDir = (Join-Path $githubRepoDir 'config-utils\catch\include\catch')
+# Threadpool needed by wila and swift:
+Copy-Item -Path $catchDir -Destination $includeDir -Recurse -Force
+
+$h_file = (Join-Path $includeDir 'catch\catch.hpp')
+if (Test-Path $h_file -PathType Leaf)
+{
+    Write-Output ("HACK: file found " + $h_file)
+} else {
+    Write-Output ("HACK: file not found " + $h_file)
+    exit 1
+}
 
 # threadpool headers are an addition to boost
 $threadpoolDir = (Join-Path $githubRepoDir 'threadpool')
@@ -72,6 +87,7 @@ if (Test-Path $h_file -PathType Leaf)
     Write-Output ("HACK: file found " + $h_file)
 } else {
     Write-Output ("HACK: file not found " + $h_file)
+    exit 1
 }
 
 # SFSL needed by swift
@@ -85,6 +101,7 @@ if (Test-Path $h_file -PathType Leaf)
     Write-Output ("HACK: file found " + $h_file)
 } else {
     Write-Output ("HACK: file not found " + $h_file)
+    exit 1
 }
 
 # Build-DeployFullStack

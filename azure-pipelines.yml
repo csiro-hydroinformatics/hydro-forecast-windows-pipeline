@@ -11,6 +11,7 @@ variables:
   pipeline_src_dir: $(Build.SourcesDirectory)
   root_src_dir: $(Build.SourcesDirectory)\s
   root_data_dir: $(Build.BinariesDirectory)\data
+  download_dir: $(Build.BinariesDirectory)\downloads
   sf_out_dir: $(Build.BinariesDirectory)\sf
   local_dir: $(Build.BinariesDirectory)\usr\local
   local_dev_dir: $(Build.BinariesDirectory)\usr\localdev
@@ -136,3 +137,15 @@ stages:
         call dos-setup.bat
         call zip-libraries.bat
       displayName: 'Create zip files of native libraries'
+    - script: |
+        call dos-setup.bat
+        call install-rtools.bat
+      displayName: 'Install RTools'
+    - script: |
+        call dos-setup.bat
+        call fetch-r-sample-data.bat
+      displayName: 'Fetch swift R package sample data'
+    - script: |
+        call dos-setup.bat
+        call build-r-pkgs.bat
+      displayName: 'Build R packages'
