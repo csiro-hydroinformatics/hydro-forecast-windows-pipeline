@@ -19,6 +19,7 @@ variables:
   # and define these to override the defaults in local_paths.props from vcpp-commons
   RootLocalPath: $(Build.BinariesDirectory)\usr\local
   RootLocalDevPath: $(Build.BinariesDirectory)\usr\localdev
+  linux_packages_dir: $(Build.ArtifactStagingDirectory)\swift_linux
 
 stages:
 - stage: Build
@@ -145,7 +146,56 @@ stages:
         call dos-setup.bat
         call fetch-r-sample-data.bat
       displayName: 'Fetch swift R package sample data'
+    - task: Bash@3
+      displayName: 'Download source R package'
+      inputs:
+        targetType: 'inline'
+        script: |
+          linux_packages_dir=$(linux_packages_dir)
+          linux_packages_fwd_dir="${linux_packages_dir//\\//}"
+          ./fetch-pkgs.sh ${linux_packages_fwd_dir}
+      env:
+        AZURE_DEVOPS_EXT_PAT: $(SWIFT_DEB_PAT)
     - script: |
         call dos-setup.bat
         call build-r-pkgs.bat
       displayName: 'Build R packages'
+    - task: CopyFiles@2
+      displayName: 'Copy build output to the artifact staging directory'
+      inputs:
+        sourceFolder: '$(root_out_dir)'
+        contents: |
+              deb_pkgs/**
+              py_pkgs/**
+              r_pkgs/**
+              *.*
+        targetFolder: '$(Build.ArtifactStagingDirectory)/release'
+
+    - task: CopyFiles@2
+      displayName: Copy files for installer version
+      inputs:
+        sourceFolder: '$(Build.BinariesDirectory)/version'
+        contents: '*.*'
+        targetFolder: '$(Build.ArtifactStagingDirectory)/version'
+    - task: UniversalPackages@0
+      displayName: Publish output bundle
+      inputs:
+        command: publish
+        publishDirectory: '$(Build.ArtifactStagingDirectory)/release'
+        vstsFeedPublish: 'OD222236-DigWaterAndLandscapes/hydro_forecast_deb'
+        vstsFeedPackagePublish: 'swift_deb'
+        versionOption: custom
+        versionPublish: '$(Build.BuildNumber)'
+        packagePublishDescription: 'Debian packages for swift and co.'
+
+    - task: UniversalPackages@0
+      displayName: Publish output bundle version
+      inputs:
+        command: publish
+        publishDirectory: '$(Build.ArtifactStagingDirectory)/version'
+        vstsFeedPublish: 'OD222236-DigWaterAndLandscapes/hydro_forecast_deb'
+        vstsFeedPackagePublish: 'swift_deb_version'
+        versionOption: custom
+        versionPublish: '$(Build.BuildNumber)'
+        packagePublishDescription: 'Version number for Debian packages for swift and co. bundle'
+
