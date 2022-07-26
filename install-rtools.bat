@@ -3,6 +3,12 @@ setlocal ENABLEDELAYEDEXPANSION
 
 @echo off
 
+echo ""
+echo ###################################
+echo # Install R tools for windows
+echo ###################################
+echo ""
+
 set exit_code=0
 
 if not defined download_dir ( 

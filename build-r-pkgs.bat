@@ -15,7 +15,13 @@ if not defined linux_packages_dir (
     goto exit
 )
 
-set tarball_dir=%linux_packages_dir%\swift_setup\swift_setup\latest\r_pkgs\lib\R_repo\src\contrib
+if not defined sf_out_dir ( 
+    set error_msg=ERROR: sf_out_dir not defined
+    set exit_code=1
+    goto exit
+)
+
+set tarball_dir=%linux_packages_dir%\swift_setup\latest\r_pkgs\lib\R_repo\src\contrib
 
 if not exist %tarball_dir% ( 
     set error_msg=ERROR: %tarball_dir% does not exist
@@ -46,6 +52,7 @@ call %cc_script_dir%\setup_dev Default 64
     set error_msg=call to setup_dev failed
     goto exit
 )
+
 
 REM avoid issue writing to program installed library.
 set rlib_dos=%userprofile%\Rlib  
@@ -82,6 +89,14 @@ REM un-double the %% to % if you copy/paste to cmd rather than call this as a sc
 REM Also, sorry for ugly redundancies. I dont trust to get Batch loops right yet: https://stackoverflow.com/questions/4334209/nested-batch-for-loops 
 
 set R_BUILD_CMD=%R_VANILLA% CMD INSTALL --build
+
+if not exist %R_WINBIN_REPO_DIR% (
+    set error_msg=ERROR: %R_WINBIN_REPO_DIR% does not exist - should already have been created
+    set exit_code=1
+    goto exit
+)
+
+cd %R_WINBIN_REPO_DIR%
 
 for %%I in ( %tarball_dir%\mhplot_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
 @if %errorlevel% neq 0 (
@@ -138,6 +153,16 @@ for %%I in ( %tarball_dir%\efts_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
     goto exit
 )
 
+copy %tarball_dir%\*.tar.gz %R_SRC_PKGS_DIR%\
+
+if not defined R_SRC_PKGS_DIR_UNIX (
+    set exit_code=%errorlevel%
+    set error_msg=R_SRC_PKGS_DIR_UNIX is not defined
+    goto exit
+)
+
+%R_VANILLA% -e "repo_winbin_dir <- '%R_WINBIN_REPO_DIR_UNIX%' ; tools::write_PACKAGES(dir=repo_winbin_dir, type='win.binary')"
+%R_VANILLA% -e "library(tools) ; write_PACKAGES(dir='%R_SRC_PKGS_DIR_UNIX%%', type='source')"
 
 :exit
 if %exit_code% neq 0 (

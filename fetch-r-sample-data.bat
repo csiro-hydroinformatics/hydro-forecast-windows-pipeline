@@ -3,6 +3,12 @@ setlocal ENABLEDELAYEDEXPANSION
 
 @echo off
 
+echo ""
+echo ###################################
+echo # fetch R sample data
+echo ###################################
+echo ""
+
 set exit_code=0
 
 if not defined root_src_dir ( 
