@@ -21,6 +21,7 @@ if not defined local_dev_dir set local_dev_dir=c:\localdev
 if not defined include_dir set include_dir=c:\local\include
 if not defined RootLocalPath set RootLocalPath=%local_dir%
 if not defined RootLocalDevPath set RootLocalDevPath=%local_dev_dir%
+if not defined linux_packages_dir set linux_packages_dir=C:\tmp\swift_pkgs
 
 if not defined github_dir set github_dir=%root_src_dir%
 if not defined csiro_dir set csiro_dir=%root_src_dir%
@@ -36,6 +37,7 @@ if not exist %sf_out_dir% mkdir %sf_out_dir%
 if not exist %local_dir% mkdir %local_dir%
 if not exist %local_dev_dir% mkdir %local_dev_dir%
 if not exist %include_dir% mkdir %include_dir%
+if not exist %linux_packages_dir% mkdir %linux_packages_dir%
 
 set dos_setup="dos-setup ran"
 

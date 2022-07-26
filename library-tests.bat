@@ -1,5 +1,11 @@
 @echo off
 
+echo ""
+echo ###################################
+echo # native libraries unit tests
+echo ###################################
+echo ""
+
 @REM echo WARNING: 2022-07-22 do_unit_tests temporarily skipped during pipeline development 
 @REM exit /b 0
 

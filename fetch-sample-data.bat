@@ -1,6 +1,15 @@
 setlocal ENABLEEXTENSIONS
 setlocal ENABLEDELAYEDEXPANSION
 
+@echo off
+
+echo ""
+echo ###################################
+echo # fetch unit test sample data
+echo ###################################
+echo ""
+
+
 set exit_code=0
 
 if not defined root_data_dir ( 

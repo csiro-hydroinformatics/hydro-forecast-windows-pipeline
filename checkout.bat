@@ -2,6 +2,14 @@
 setlocal ENABLEEXTENSIONS
 setlocal ENABLEDELAYEDEXPANSION
 
+@echo off
+
+echo ""
+echo ###################################
+echo # checkout
+echo ###################################
+echo ""
+
 if not defined SWIFT_PAT_ENV_VAR ( 
     echo "ERROR: SWIFT_PAT_ENV_VAR not defined"
     set exit_code=1

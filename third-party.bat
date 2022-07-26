@@ -1,6 +1,14 @@
 setlocal ENABLEEXTENSIONS
 setlocal ENABLEDELAYEDEXPANSION
 
+@echo off
+
+echo ""
+echo ###################################
+echo # Fetch third party c++ libraries
+echo ###################################
+echo ""
+
 set exit_code=0
 
 if not defined local_dir ( 
