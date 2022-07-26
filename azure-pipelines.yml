@@ -21,6 +21,10 @@ variables:
   RootLocalDevPath: $(Build.BinariesDirectory)\usr\localdev
   linux_packages_dir: $(Build.ArtifactStagingDirectory)\swift_linux
 
+# to get a custom '$(Build.BuildNumber)', and 'r' is a counter reset to 1 every change of the major/minor versions
+# TODO: reference to this technique on the web?
+name: '0.1.$(Rev:r)'
+
 stages:
 - stage: Build
   displayName: Build Stage
