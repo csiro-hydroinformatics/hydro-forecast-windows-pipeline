@@ -151,8 +151,11 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          linux_packages_dir=$(linux_packages_dir)
-          linux_packages_fwd_dir="${linux_packages_dir//\\//}"
+          # using $(linux_packages_dir) here fails; dir separators are lost. PITN.
+          # linux_packages_dir=$(linux_packages_dir)
+          # linux_packages_fwd_dir="${linux_packages_dir//\\//}"
+          # instead have to do:
+          linux_packages_fwd_dir="${BUILD_ARTIFACTSTAGINGDIRECTORY//\\//}/swift_linux"
           ./fetch-pkgs.sh ${linux_packages_fwd_dir}
       env:
         AZURE_DEVOPS_EXT_PAT: $(AZ_ARTIFACT_DL_PAT)
