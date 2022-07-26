@@ -155,7 +155,7 @@ stages:
           linux_packages_fwd_dir="${linux_packages_dir//\\//}"
           ./fetch-pkgs.sh ${linux_packages_fwd_dir}
       env:
-        AZURE_DEVOPS_EXT_PAT: $(SWIFT_DEB_PAT)
+        AZURE_DEVOPS_EXT_PAT: $(AZ_ARTIFACT_DL_PAT)
     - script: |
         call dos-setup.bat
         call build-r-pkgs.bat
