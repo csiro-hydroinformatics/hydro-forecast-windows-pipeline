@@ -54,12 +54,6 @@ if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CS
 cd %GITHUB_REPOS%
 if not exist vcpp-commons git clone %GITHUB_REPO_ROOT%/vcpp-commons
 
-cd %CSIRO_BITBUCKET%\cruise-control
-git checkout testing
-
-cd %GITHUB_REPOS%\vcpp-commons
-git checkout testing
-
 @REM echo "TEMP TEST: just check out cruise control, then exit."
 @REM set exit_code=0
 @REM goto exit
@@ -134,12 +128,22 @@ if not exist numerical-sl-cpp (
         goto exit
     )
 )
+
+cd %CSIRO_BITBUCKET%\numerical-sl-cpp
+git checkout experimental
 cd %CSIRO_BITBUCKET%\datatypes
 git checkout experimental
 cd %CSIRO_BITBUCKET%\swift
 git checkout experimental
 cd %CSIRO_BITBUCKET%\qpp
 git checkout experimental
+
+cd %CSIRO_BITBUCKET%\cruise-control
+git checkout testing
+
+cd %GITHUB_REPOS%\vcpp-commons
+git checkout testing
+
 cd %GITHUB_REPOS%\moirai
 git checkout experimental
 cd %GITHUB_REPOS%\rcpp-interop-commons
@@ -160,6 +164,8 @@ cd %GITHUB_REPOS%\efts-python
 git checkout testing
 cd %GITHUB_REPOS%\mhplot
 git checkout master
+cd %GITHUB_REPOS%\pyrefcount
+git checkout testing
 
 
 @REM cd %CSIRO_BITBUCKET%
