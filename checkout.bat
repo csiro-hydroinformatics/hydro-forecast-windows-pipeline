@@ -87,7 +87,7 @@ if not exist moirai (
 )
 
 cd %GITHUB_REPOS%
-if not exist rcpp-interop-commons git clone %GITHUB_REPO_ROOT%/rcpp-interop-commons.git
+if not exist c-interop git clone %GITHUB_REPO_ROOT%/c-interop.git
 
 cd %GITHUB_REPOS%
 if not exist threadpool git clone %GITHUB_REPO_ROOT%/threadpool.git
@@ -146,7 +146,7 @@ git checkout testing
 
 cd %GITHUB_REPOS%\moirai
 git checkout experimental
-cd %GITHUB_REPOS%\rcpp-interop-commons
+cd %GITHUB_REPOS%\c-interop
 git checkout experimental
 cd %GITHUB_REPOS%\threadpool
 git checkout master
