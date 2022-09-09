@@ -130,13 +130,13 @@ if not exist numerical-sl-cpp (
 )
 
 cd %CSIRO_BITBUCKET%\numerical-sl-cpp
-git checkout experimental
+git checkout testing
 cd %CSIRO_BITBUCKET%\datatypes
-git checkout experimental
+git checkout testing
 cd %CSIRO_BITBUCKET%\swift
-git checkout experimental
+git checkout testing
 cd %CSIRO_BITBUCKET%\qpp
-git checkout experimental
+git checkout testing
 
 cd %CSIRO_BITBUCKET%\cruise-control
 git checkout testing
@@ -145,13 +145,13 @@ cd %GITHUB_REPOS%\vcpp-commons
 git checkout testing
 
 cd %GITHUB_REPOS%\moirai
-git checkout experimental
+git checkout testing
 cd %GITHUB_REPOS%\c-interop
-git checkout experimental
+git checkout testing
 cd %GITHUB_REPOS%\threadpool
 git checkout master
 cd %GITHUB_REPOS%\wila
-git checkout experimental
+git checkout testing
 cd %GITHUB_REPOS%\config-utils
 git checkout testing
 cd %GITHUB_REPOS%\yaml-cpp
