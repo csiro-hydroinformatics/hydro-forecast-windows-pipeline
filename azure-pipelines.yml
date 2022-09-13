@@ -36,30 +36,38 @@ stages:
     steps:
     - checkout: self
     # where are we??
-    - script: |
-        echo
-        echo current directory is:
-        cd
-        echo
-        echo BUILD_SOURCESDIRECTORY=%BUILD_SOURCESDIRECTORY%
-        echo
-        echo Build.SourcesDirectory=$(Build.SourcesDirectory)
-        echo
-        echo local_dev_dir=$(local_dev_dir)
-        echo
-        if defined SWIFT_PAT_ENV_VAR echo "SWIFT_PAT is defined"
-        echo 
-        echo Bash is located at:
-        where bash
-        where 7z
-        where curl
-      displayName: 'DEBUG: where repos are checked out'
-      env:
-        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+    #- script: |
+    #    echo
+    #    echo current directory is:
+    #    cd
+    #    echo
+    #    echo BUILD_SOURCESDIRECTORY=%BUILD_SOURCESDIRECTORY%
+    #    echo
+    #    echo Build.SourcesDirectory=$(Build.SourcesDirectory)
+    #    echo
+    #    echo local_dev_dir=$(local_dev_dir)
+    #    echo
+    #    if defined SWIFT_PAT_ENV_VAR echo "SWIFT_PAT is defined"
+    #    echo 
+    #    echo Bash is located at:
+    #    where bash
+    #    where 7z
+    #    where curl
+    #  displayName: 'DEBUG: where repos are checked out'
+    #  env:
+    #    SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
     - script: |
         call dos-setup.bat
         call third-party.bat
-      displayName: 'Install third party libraries and headers'
+      displayName: 'Fetch/install third party dependencies'
+    - script: |
+        call dos-setup.bat
+        call fetch-sample-data.bat
+      displayName: 'Fetch documentation and test data'
+    - script: |
+        call dos-setup.bat
+        call install-rtools.bat
+      displayName: 'Install RTools'
     # - task: Bash@3
     #   inputs:
     #     targetType: 'inline'
@@ -97,7 +105,24 @@ stages:
     - script: |
         call dos-setup.bat
         call test-setupdev.bat
-      displayName: 'TEST: check cruise-control setup_dev upfront'
+      displayName: 'Check cruise-control setup_dev upfront'
+    - script: |
+        call dos-setup.bat
+        call fetch-r-sample-data.bat
+      displayName: 'Fetch swift R package sample data'
+    - task: Bash@3
+      displayName: 'Fetch our R source packages'
+      inputs:
+        targetType: 'inline'
+        script: |
+          # using $(linux_packages_dir) here fails; dir separators are lost. PITN.
+          # linux_packages_dir=$(linux_packages_dir)
+          # linux_packages_fwd_dir="${linux_packages_dir//\\//}"
+          # instead have to do:
+          linux_packages_fwd_dir="${BUILD_ARTIFACTSTAGINGDIRECTORY//\\//}/swift_linux"
+          ./fetch-pkgs.sh ${linux_packages_fwd_dir}
+      env:
+        AZURE_DEVOPS_EXT_PAT: $(AZ_ARTIFACT_DL_PAT)
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
@@ -110,11 +135,6 @@ stages:
         filePath: $(Build.SourcesDirectory)\make-props.ps1
         pwsh: true
       displayName: 'Create user vcpp_config.props'
-    # - script: |
-    #     call third-party-lib.bat
-    #   env:
-    #     SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-    #   displayName: Install third party precompiled libraries boost and netcdf
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
@@ -129,40 +149,15 @@ stages:
         # needed to override defaults in local_paths.props
         RootLocalPath: $(local_dir)
         RootLocalDevPath: $(local_dev_dir)
-      displayName: 'Compile with Invoke-MsBuild'
-    - script: |
-        call dos-setup.bat
-        call fetch-sample-data.bat
-      displayName: 'Fetch unit test and documentation sample data'
+      displayName: 'Compile stack via Invoke-MsBuild'
     - script: |
         call dos-setup.bat
         call library-tests.bat
-      displayName: 'Run unit tests on the native libraries'
+      displayName: 'Unit tests on the native libraries'
     - script: |
         call dos-setup.bat
         call zip-libraries.bat
       displayName: 'Create zip files of native libraries'
-    - script: |
-        call dos-setup.bat
-        call install-rtools.bat
-      displayName: 'Install RTools'
-    - script: |
-        call dos-setup.bat
-        call fetch-r-sample-data.bat
-      displayName: 'Fetch swift R package sample data'
-    - task: Bash@3
-      displayName: 'Download source R package'
-      inputs:
-        targetType: 'inline'
-        script: |
-          # using $(linux_packages_dir) here fails; dir separators are lost. PITN.
-          # linux_packages_dir=$(linux_packages_dir)
-          # linux_packages_fwd_dir="${linux_packages_dir//\\//}"
-          # instead have to do:
-          linux_packages_fwd_dir="${BUILD_ARTIFACTSTAGINGDIRECTORY//\\//}/swift_linux"
-          ./fetch-pkgs.sh ${linux_packages_fwd_dir}
-      env:
-        AZURE_DEVOPS_EXT_PAT: $(AZ_ARTIFACT_DL_PAT)
     - script: |
         call dos-setup.bat
         call build-r-pkgs.bat
