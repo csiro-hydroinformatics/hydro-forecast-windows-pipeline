@@ -42,7 +42,7 @@ if %errorlevel% neq 0 (
     goto exit
 )
 
-curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/cl3QJ17UV5HJkzo/download
+curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/TQnRgaYIfzJpdKB/download
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=include_third_party.7z download failed

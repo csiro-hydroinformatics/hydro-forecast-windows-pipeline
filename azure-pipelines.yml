@@ -76,7 +76,7 @@ stages:
     #       cd $local_dir_nix
     #       echo currently under `pwd`
     #       curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
-    #       curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/cl3QJ17UV5HJkzo/download
+    #       curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/TQnRgaYIfzJpdKB/download
     #       # which 7z  : /c/ProgramData/Chocolatey/bin/7z
     #       7z x -y libs_third_party.7z 
     #       7z x -y include_third_party.7z 
