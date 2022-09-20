@@ -76,6 +76,9 @@ if not exist swift git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/swif
 cd %CSIRO_BITBUCKET%
 if not exist qpp git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/qpp.git
 
+cd %CSIRO_BITBUCKET%
+if not exist chypp git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/CHyPP.git
+
 cd %GITHUB_REPOS%
 if not exist moirai (
     git clone %GITHUB_REPO_ROOT%/moirai.git
@@ -136,6 +139,8 @@ git checkout testing
 cd %CSIRO_BITBUCKET%\swift
 git checkout testing
 cd %CSIRO_BITBUCKET%\qpp
+git checkout testing
+cd %CSIRO_BITBUCKET%\chypp
 git checkout testing
 
 cd %CSIRO_BITBUCKET%\cruise-control

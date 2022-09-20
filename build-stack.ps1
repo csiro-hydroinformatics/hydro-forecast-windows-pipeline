@@ -166,16 +166,16 @@ $lvlThreeSlns[$swiftLibName] = (Join-Path $csiroBitbucket 'swift\Solutions\SWIFT
 # Invoke-MSBuild : Object '/blah.rem' has been disconnected or does not exist at the server.   
 Install-SharedLibsMultiCfg -Solutions $lvlThreeSlns -LibsDirs $libsDirs -BuildPlatforms $buildPlatforms -BuildMode $buildMode -ToolsVersion $toolsVersion -LibNames $lvlThreeLibnames 
 
-# $rppLibName = 'rpp'
-# $rppSlns = @{}
-# $rppSlns[$rppLibName] = (Join-Path $csiroBitbucket 'rpp-cpp\rpp.sln')
-# $rppLibnames = @($rppLibName)
+$rppLibName = 'chypp'
+$rppSlns = @{}
+$rppSlns[$rppLibName] = (Join-Path $csiroBitbucket 'chypp\Solutions\CHyPP.sln')
+$rppLibnames = @($rppLibName)
 
-# Install-SharedLibsMultiCfg -Solutions $rppSlns -LibsDirs $libsDirs -BuildPlatforms $buildPlatforms -BuildMode $buildMode -ToolsVersion $toolsVersion -LibNames $rppLibnames 
+Install-SharedLibsMultiCfg -Solutions $rppSlns -LibsDirs $libsDirs -BuildPlatforms $buildPlatforms -BuildMode $buildMode -ToolsVersion $toolsVersion -LibNames $rppLibnames 
 
-# $headerDirectories = @{}
-# $headerDirectories[$rppLibName] = (Join-Path $csiroBitbucket 'rpp-cpp\include\rpp')
-# Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
+$headerDirectories = @{}
+$headerDirectories[$rppLibName] = (Join-Path $csiroBitbucket 'chypp\CHyPP\include\chypp')
+Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 
 ########## Level four, QPP depends on swift...
 $qppcoreLibName = 'qppcore'
