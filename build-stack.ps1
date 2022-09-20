@@ -124,7 +124,7 @@ $headerDirectories[$moiraiLibName] = (Join-Path $githubRepoDir 'moirai\include\m
 $headerDirectories[$yamlLibName] = (Join-Path $githubRepoDir 'yaml-cpp\include\yaml-cpp')
 $headerDirectories[$jsonLibName] = (Join-Path $githubRepoDir 'jsoncpp\include\json')
 $headerDirectories[$wilaLibName] = (Join-Path $githubRepoDir 'wila\include\wila')
-$headerDirectories[$cinteropLibName] = (Join-Path $githubRepoDir 'rcpp-interop-commons\include\cinterop')
+$headerDirectories[$cinteropLibName] = (Join-Path $githubRepoDir 'c-interop\include\cinterop')
 
 Copy-HeaderFiles -headerDirectories $headerDirectories -ToDir $includeDir
 

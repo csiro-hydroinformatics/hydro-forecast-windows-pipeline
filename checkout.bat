@@ -54,12 +54,6 @@ if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CS
 cd %GITHUB_REPOS%
 if not exist vcpp-commons git clone %GITHUB_REPO_ROOT%/vcpp-commons
 
-cd %CSIRO_BITBUCKET%\cruise-control
-git checkout testing
-
-cd %GITHUB_REPOS%\vcpp-commons
-git checkout testing
-
 @REM echo "TEMP TEST: just check out cruise control, then exit."
 @REM set exit_code=0
 @REM goto exit
@@ -93,7 +87,7 @@ if not exist moirai (
 )
 
 cd %GITHUB_REPOS%
-if not exist rcpp-interop-commons git clone %GITHUB_REPO_ROOT%/rcpp-interop-commons.git
+if not exist c-interop git clone %GITHUB_REPO_ROOT%/c-interop.git
 
 cd %GITHUB_REPOS%
 if not exist threadpool git clone %GITHUB_REPO_ROOT%/threadpool.git
@@ -134,20 +128,30 @@ if not exist numerical-sl-cpp (
         goto exit
     )
 )
+
+cd %CSIRO_BITBUCKET%\numerical-sl-cpp
+git checkout testing
 cd %CSIRO_BITBUCKET%\datatypes
-git checkout experimental
+git checkout testing
 cd %CSIRO_BITBUCKET%\swift
-git checkout experimental
+git checkout testing
 cd %CSIRO_BITBUCKET%\qpp
-git checkout experimental
+git checkout testing
+
+cd %CSIRO_BITBUCKET%\cruise-control
+git checkout testing
+
+cd %GITHUB_REPOS%\vcpp-commons
+git checkout testing
+
 cd %GITHUB_REPOS%\moirai
-git checkout experimental
-cd %GITHUB_REPOS%\rcpp-interop-commons
-git checkout experimental
+git checkout testing
+cd %GITHUB_REPOS%\c-interop
+git checkout testing
 cd %GITHUB_REPOS%\threadpool
 git checkout master
 cd %GITHUB_REPOS%\wila
-git checkout experimental
+git checkout testing
 cd %GITHUB_REPOS%\config-utils
 git checkout testing
 cd %GITHUB_REPOS%\yaml-cpp
@@ -160,6 +164,8 @@ cd %GITHUB_REPOS%\efts-python
 git checkout testing
 cd %GITHUB_REPOS%\mhplot
 git checkout master
+cd %GITHUB_REPOS%\pyrefcount
+git checkout testing
 
 
 @REM cd %CSIRO_BITBUCKET%
