@@ -64,10 +64,6 @@ stages:
         call dos-setup.bat
         call fetch-sample-data.bat
       displayName: 'Fetch documentation and test data'
-    - script: |
-        call dos-setup.bat
-        call install-rtools.bat
-      displayName: 'Install RTools'
     # - task: Bash@3
     #   inputs:
     #     targetType: 'inline'
@@ -135,6 +131,10 @@ stages:
         filePath: $(Build.SourcesDirectory)\make-props.ps1
         pwsh: true
       displayName: 'Create user vcpp_config.props'
+    - script: |
+        call dos-setup.bat
+        call install-rtools.bat
+      displayName: 'Install RTools'
     - task: PowerShell@2
       inputs:
         targetType: 'filePath'
