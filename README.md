@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Our [streamflow forecasting software stack](https://github.com/csiro-hydroinformatics/streamflow-forecasting-tools-onboard/) is quite mature and complicated. To facilitate building and packaging we need contemporary build pipeline to **minimise manual steps**.
+Our [streamflow forecasting software stack](https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/) is quite mature and complicated. To facilitate building and packaging we need contemporary build pipeline to **minimise manual steps**.
 
 This repository contains material to streamline the build, testing and possible deployment of hydrologic simulation and forecasting tools.
 
