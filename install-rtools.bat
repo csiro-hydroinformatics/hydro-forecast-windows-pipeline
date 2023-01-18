@@ -33,17 +33,17 @@ cd %download_dir%
 
 @REM as of Jan 2023: rtools42-5355-5357.exe
 
-curl -o rtools42-5355-5357-signed.exe https://cran.csiro.au/bin/windows/Rtools/rtools42/files/rtools42-5355-5357-signed.exe
+curl -o rtools42-5355-5357.exe https://cran.csiro.au/bin/windows/Rtools/rtools42/files/rtools42-5355-5357.exe
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
-    set error_msg=rtools42-5355-5357-signed.exe download failed
+    set error_msg=rtools42-5355-5357.exe download failed
     goto exit
 )
 
-rtools42-5355-5357-signed.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+rtools42-5355-5357.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
-    set error_msg=FAILED: rtools42-5355-5357-signed.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+    set error_msg=FAILED: rtools42-5355-5357.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
     goto exit
 )
 
