@@ -4,9 +4,10 @@ setlocal ENABLEDELAYEDEXPANSION
 @echo off
 
 echo ""
-echo ###################################
-echo # Fetch third party c++ libraries
-echo ###################################
+echo #######################
+echo # Fetch third party c++
+echo # header and libraries
+echo #######################
 echo ""
 
 set exit_code=0

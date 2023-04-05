@@ -52,7 +52,26 @@ call %cc_script_dir%\setup_dev Default 64
     set error_msg=call to setup_dev failed
     goto exit
 )
+@REM we expect a few variable to be defined by setup_dev
 
+REM 202304 we'll use this script to copy matlab functions.
+if not defined MATLAB_DIR (
+    set exit_code=1
+    set error_msg=MATLAB_DIR is not defined
+    goto exit
+)
+
+if not defined R_SRC_PKGS_DIR (
+    set exit_code=1
+    set error_msg=R_SRC_PKGS_DIR is not defined
+    goto exit
+)
+
+if not defined R_SRC_PKGS_DIR_UNIX (
+    set exit_code=1
+    set error_msg=R_SRC_PKGS_DIR_UNIX is not defined
+    goto exit
+)
 
 REM avoid issue writing to program installed library.
 set rlib_dos=%userprofile%\Rlib  
@@ -155,14 +174,22 @@ for %%I in ( %tarball_dir%\efts_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
 
 copy %tarball_dir%\*.tar.gz %R_SRC_PKGS_DIR%\
 
-if not defined R_SRC_PKGS_DIR_UNIX (
-    set exit_code=%errorlevel%
-    set error_msg=R_SRC_PKGS_DIR_UNIX is not defined
-    goto exit
-)
-
 %R_VANILLA% -e "repo_winbin_dir <- '%R_WINBIN_REPO_DIR_UNIX%' ; tools::write_PACKAGES(dir=repo_winbin_dir, type='win.binary')"
 %R_VANILLA% -e "library(tools) ; write_PACKAGES(dir='%R_SRC_PKGS_DIR_UNIX%%', type='source')"
+
+REM MATLAB 
+
+set swift_src_dir=%csiro_dir%\swift
+set swift_mat_src_dir=%swift_src_dir%\bindings\matlab
+set fogss_src_dir=%csiro_dir%\qpp
+set fogss_mat_src_dir=%fogss_src_dir%\bindings\matlab
+
+set robocopy_opt=/MIR /MT:1 /R:2 /NJS /NJH /NFL /NDL /XX
+
+if not exist %MATLAB_DIR%\swift mkdir %MATLAB_DIR%\swift
+robocopy %swift_mat_src_dir% %MATLAB_DIR%\swift %robocopy_opt%
+if not exist %MATLAB_DIR%\fogss mkdir %MATLAB_DIR%\fogss
+robocopy %fogss_mat_src_dir% %MATLAB_DIR%\fogss %robocopy_opt%
 
 :exit
 if %exit_code% neq 0 (

@@ -1,7 +1,6 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+#############
+# Azure build pipeline for streamflow forecasting products, packaging for windows
+#############
 
 trigger:
 - main
@@ -16,9 +15,10 @@ variables:
   local_dir: $(Build.BinariesDirectory)\usr\local
   local_dev_dir: $(Build.BinariesDirectory)\usr\localdev
   include_dir: $(Build.BinariesDirectory)\usr\local\include
-  # and define these to override the defaults in local_paths.props from vcpp-commons
+  # and define these RootLocal* to override the defaults in local_paths.props from vcpp-commons
   RootLocalPath: $(Build.BinariesDirectory)\usr\local
   RootLocalDevPath: $(Build.BinariesDirectory)\usr\localdev
+  # We retrieve the artifacts from the Linux build pipelines, to obtain R packages
   linux_packages_dir: $(Build.ArtifactStagingDirectory)\swift_linux
 
 # to get a custom '$(Build.BuildNumber)', and 'r' is a counter reset to 1 every change of the major/minor versions
