@@ -1,6 +1,7 @@
+setlocal ENABLEEXTENSIONS
+setlocal ENABLEDELAYEDEXPANSION
 
 @echo off
-
 
 echo ""
 echo ###################################

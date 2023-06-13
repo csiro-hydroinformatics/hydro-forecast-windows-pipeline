@@ -1,3 +1,6 @@
+setlocal ENABLEEXTENSIONS
+setlocal ENABLEDELAYEDEXPANSION
+
 @echo off
 
 @set exit_code=0

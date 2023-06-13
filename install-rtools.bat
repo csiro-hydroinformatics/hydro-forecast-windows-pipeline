@@ -33,6 +33,23 @@ cd %download_dir%
 
 @REM as of Jan 2023: rtools42-5355-5357.exe
 
+@REM as of June 2023: need to install R 4.2.x also. The Windows Image in AZDO now comes with R 4.3, and RTools 4.3. However the mingw ld.exe has a bug preventing uchronia R pkg to be built (see https://jira.csiro.au/projects/WIRADA/issues/WIRADA-665)
+
+curl -o R-4.2.3-win.exe https://cran.csiro.au/bin/windows/base/old/4.2.3/R-4.2.3-win.exe
+if %errorlevel% neq 0 (
+    set exit_code=%errorlevel%
+    set error_msg=R-4.2.3-win.exe download failed
+    goto exit
+)
+
+R-4.2.3-win.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+if %errorlevel% neq 0 (
+    set exit_code=%errorlevel%
+    set error_msg=FAILED: R-4.2.3-win.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+    goto exit
+)
+
+
 curl -o rtools42-5355-5357.exe https://cran.csiro.au/bin/windows/Rtools/rtools42/files/rtools42-5355-5357.exe
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
