@@ -88,11 +88,11 @@ echo REPO_EFTS=%REPO_EFTS%
 echo REPO_EFTS_PYTHON=%REPO_EFTS_PYTHON%
 echo REPO_MHPLOT=%REPO_MHPLOT%
 
-if %REPO_CRUISE_CONTROL% eq "" ( 
-    echo "ERROR: Failed to retrieve commit hashes for repos"
-    set exit_code=1
-    goto exit
-)
+:: if %REPO_CRUISE_CONTROL% eq "" ( 
+::     echo "ERROR: Failed to retrieve commit hashes for repos"
+::     set exit_code=1
+::     goto exit
+:: )
 
 cd %CSIRO_BITBUCKET%
 if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
