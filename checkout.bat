@@ -55,10 +55,21 @@ cd %GITHUB_REPOS%
 if not exist sf-stack git clone %GITHUB_REPO_ROOT%/sf-stack
 
 echo Checking out sf-stack branch %BRANCH_NAME_ENV_VAR%
+if not exist %GITHUB_REPOS%\sf-stack ( 
+    echo "ERROR: path not found %GITHUB_REPOS%\sf-stack"
+    set exit_code=1
+    goto exit
+)
 cd %GITHUB_REPOS%\sf-stack
 git checkout %BRANCH_NAME_ENV_VAR%
 
-call %GITHUB_REPOS%\sf-stack\commit_hashes.bat
+cd %GITHUB_REPOS%\sf-stack
+if not exist commit_hashes.bat ( 
+    echo "ERROR: file not found commit_hashes.bat"
+    set exit_code=1
+    goto exit
+)
+call commit_hashes.bat
 
 echo REPO_CRUISE_CONTROL=%REPO_CRUISE_CONTROL%
 echo REPO_NUMERICAL_SL_CPP=%REPO_NUMERICAL_SL_CPP%
@@ -76,6 +87,13 @@ echo REPO_WILA=%REPO_WILA%
 echo REPO_EFTS=%REPO_EFTS%
 echo REPO_EFTS_PYTHON=%REPO_EFTS_PYTHON%
 echo REPO_MHPLOT=%REPO_MHPLOT%
+
+if %REPO_CRUISE_CONTROL% eq "" ( 
+    echo "ERROR: Failed to retrieve commit hashes for repos"
+    set exit_code=1
+    goto exit
+)
+
 
 cd %CSIRO_BITBUCKET%
 if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
