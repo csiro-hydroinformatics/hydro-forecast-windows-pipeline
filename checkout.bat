@@ -51,19 +51,19 @@ set exit_code=0
 echo "Git: turning the detached message off"
 git config --global advice.detachedHead false
 
-cd %GITHUB_REPOS%
-if not exist sf-stack git clone %GITHUB_REPO_ROOT%/sf-stack
+cd %CSIRO_BITBUCKET%
+if not exist sf-stack git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/sf-stack
 
 echo Checking out sf-stack branch %BRANCH_NAME_ENV_VAR%
-if not exist %GITHUB_REPOS%\sf-stack ( 
-    echo "ERROR: path not found %GITHUB_REPOS%\sf-stack"
+if not exist %CSIRO_BITBUCKET%\sf-stack ( 
+    echo "ERROR: path not found %CSIRO_BITBUCKET%\sf-stack"
     set exit_code=1
     goto exit
 )
-cd %GITHUB_REPOS%\sf-stack
+cd %CSIRO_BITBUCKET%\sf-stack
 git checkout %BRANCH_NAME_ENV_VAR%
 
-cd %GITHUB_REPOS%\sf-stack
+cd %CSIRO_BITBUCKET%\sf-stack
 if not exist commit_hashes.bat ( 
     echo "ERROR: file not found commit_hashes.bat"
     set exit_code=1
@@ -93,7 +93,6 @@ if %REPO_CRUISE_CONTROL% eq "" (
     set exit_code=1
     goto exit
 )
-
 
 cd %CSIRO_BITBUCKET%
 if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
