@@ -97,6 +97,7 @@ stages:
         call checkout.bat
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+        BRANCH_NAME_ENV_VAR: $(Build.SourceBranchName)
       displayName: check out sources
     - script: |
         call dos-setup.bat
