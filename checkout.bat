@@ -48,33 +48,34 @@ set GITHUB_REPOS=%OUR_SRC_DIR%
 
 set exit_code=0
 
+echo "Git: turning the detached message off"
+git config --global advice.detachedHead false
+
 cd %GITHUB_REPOS%
 if not exist sf-stack git clone %GITHUB_REPO_ROOT%/sf-stack
 
+echo Checking out sf-stack branch %BRANCH_NAME_ENV_VAR%
 cd %GITHUB_REPOS%\sf-stack
 git checkout %BRANCH_NAME_ENV_VAR%
+
 call %GITHUB_REPOS%\sf-stack\commit_hashes.bat
 
-:: turn the detached message off
-git config --global advice.detachedHead false
-
-
-:: REPO_CRUISE_CONTROL
-:: REPO_NUMERICAL_SL_CPP
-:: REPO_DATATYPES
-:: REPO_SWIFT
-:: REPO_QPP
-:: REPO_CHYPP
-:: REPO_VCPP_COMMONS
-:: REPO_MOIRAI
-:: REPO_C_INTEROP
-:: REPO_PYREFCOUNT
-:: REPO_THREADPOOL
-:: REPO_CONFIG_UTILS
-:: REPO_WILA
-:: REPO_EFTS
-:: REPO_EFTS_PYTHON
-:: REPO_MHPLOT
+echo REPO_CRUISE_CONTROL=%REPO_CRUISE_CONTROL%
+echo REPO_NUMERICAL_SL_CPP=%REPO_NUMERICAL_SL_CPP%
+echo REPO_DATATYPES=%REPO_DATATYPES%
+echo REPO_SWIFT=%REPO_SWIFT%
+echo REPO_QPP=%REPO_QPP%
+echo REPO_CHYPP=%REPO_CHYPP%
+echo REPO_VCPP_COMMONS=%REPO_VCPP_COMMONS%
+echo REPO_MOIRAI=%REPO_MOIRAI%
+echo REPO_C_INTEROP=%REPO_C_INTEROP%
+echo REPO_PYREFCOUNT=%REPO_PYREFCOUNT%
+echo REPO_THREADPOOL=%REPO_THREADPOOL%
+echo REPO_CONFIG_UTILS=%REPO_CONFIG_UTILS%
+echo REPO_WILA=%REPO_WILA%
+echo REPO_EFTS=%REPO_EFTS%
+echo REPO_EFTS_PYTHON=%REPO_EFTS_PYTHON%
+echo REPO_MHPLOT=%REPO_MHPLOT%
 
 cd %CSIRO_BITBUCKET%
 if not exist cruise-control git clone %CSIRO_BITBUCKET_URL_ROOT%/%REMOTE_REPO_CSIRO%/cruise-control.git
