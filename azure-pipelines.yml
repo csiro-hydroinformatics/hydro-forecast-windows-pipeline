@@ -56,10 +56,6 @@ stages:
     #  displayName: 'DEBUG: where repos are checked out'
     #  env:
     #    SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
-    - script: |
-        call dos-setup.bat
-        call fetch-sample-data.bat
-      displayName: 'Fetch documentation and test data'
     # - task: Bash@3
     #   inputs:
     #     targetType: 'inline'
@@ -103,6 +99,10 @@ stages:
         call dos-setup.bat
         call test-setupdev.bat
       displayName: 'Check cruise-control setup_dev upfront'
+    - script: |
+        call dos-setup.bat
+        call fetch-sample-data.bat
+      displayName: 'Fetch documentation and test data'
     - script: |
         call dos-setup.bat
         call fetch-r-sample-data.bat
