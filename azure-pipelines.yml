@@ -58,10 +58,6 @@ stages:
     #    SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
     - script: |
         call dos-setup.bat
-        call third-party.bat
-      displayName: 'Fetch/install third party dependencies'
-    - script: |
-        call dos-setup.bat
         call fetch-sample-data.bat
       displayName: 'Fetch documentation and test data'
     # - task: Bash@3
@@ -99,6 +95,10 @@ stages:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
         BRANCH_NAME_ENV_VAR: $(Build.SourceBranchName)
       displayName: check out sources
+    - script: |
+        call dos-setup.bat
+        call third-party.bat
+      displayName: 'Fetch/install third party dependencies'
     - script: |
         call dos-setup.bat
         call test-setupdev.bat

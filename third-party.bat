@@ -36,19 +36,39 @@ if not exist %local_dev_dir%\libs\64 mkdir %local_dev_dir%\libs\64
 
 cd %local_dir%
 
-curl -o libs_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/GdV0QmFISDHrwPG/download
-if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=libs_third_party.7z download failed
+if not defined root_src_dir ( 
+    echo "ERROR: root_src_dir not defined"
+    set exit_code=1
     goto exit
-)
+) 
 
-curl -o include_third_party.7z https://cloudstor.aarnet.edu.au/plus/s/TQnRgaYIfzJpdKB/download
-if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=include_third_party.7z download failed
+set OUR_SRC_DIR=%root_src_dir%
+set GITHUB_REPOS=%OUR_SRC_DIR%
+
+if not exist %OUR_SRC_DIR% ( 
+    echo "ERROR: %OUR_SRC_DIR% not found"
+    set exit_code=1
     goto exit
-)
+) 
+
+if not exist %OUR_SRC_DIR%\sf-stack-deps ( 
+    echo "ERROR: %OUR_SRC_DIR%\sf-stack-deps not found"
+    set exit_code=1
+    goto exit
+) 
+
+if not exist %GITHUB_REPOS%\sf-test-data ( 
+    echo "ERROR: %GITHUB_REPOS%\sf-test-data not found"
+    set exit_code=1
+    goto exit
+) 
+
+cd %local_dir%
+set COPYOPTIONS=/Y /R
+xcopy %GITHUB_REPOS%\sf-stack-deps\include_third_party.7z %local_dir% %COPYOPTIONS%
+xcopy %GITHUB_REPOS%\sf-stack-deps\libs_third_party.7z %local_dir% %COPYOPTIONS%
+
+sf-test-data?
 
 7z x -y libs_third_party.7z 
 if %errorlevel% neq 0 (

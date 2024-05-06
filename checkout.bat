@@ -151,6 +151,20 @@ if not exist moirai (
 cd %GITHUB_REPOS%\moirai
 git checkout %REPO_MOIRAI%
 
+REM binary data, dependencies and unit tests data. 
+cd %GITHUB_REPOS%
+
+git lfs install
+if %errorlevel% neq 0 ( 
+    echo "ERROR: `git lfs install` failed"
+    set exit_code=1
+    goto exit
+)
+
+if not exist sf-test-data git clone %GITHUB_REPO_ROOT%/sf-test-data.git
+
+if not exist sf-stack-deps git clone %GITHUB_REPO_ROOT%/sf-stack-deps.git
+
 cd %GITHUB_REPOS%
 if not exist c-interop git clone %GITHUB_REPO_ROOT%/c-interop.git
 cd %GITHUB_REPOS%\c-interop

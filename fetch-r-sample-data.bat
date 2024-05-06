@@ -27,12 +27,32 @@ if not exist %r_data_dir% (
 
 cd %r_data_dir%
 
-curl -o swift_sample_data.rda https://cloudstor.aarnet.edu.au/plus/s/vfIbwcISy8jKQmg/download
-if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=swift_sample_data.rda download failed
+@REM cloudstor decomissioned
+@REM curl -o swift_sample_data.rda https://cloudstor.aarnet.edu.au/plus/s/vfIbwcISy8jKQmg/download
+@REM if %errorlevel% neq 0 (
+@REM     set exit_code=%errorlevel%
+@REM     set error_msg=swift_sample_data.rda download failed
+@REM     goto exit
+@REM )
+
+set OUR_SRC_DIR=%root_src_dir%
+set GITHUB_REPOS=%OUR_SRC_DIR%
+
+if not exist %OUR_SRC_DIR% ( 
+    echo "ERROR: %OUR_SRC_DIR% not found"
+    set exit_code=1
     goto exit
-)
+) 
+
+if not exist %GITHUB_REPOS%\sf-test-data ( 
+    echo "ERROR: %GITHUB_REPOS%\sf-test-data not found"
+    set exit_code=1
+    goto exit
+) 
+
+set COPYOPTIONS=/Y /R
+xcopy %GITHUB_REPOS%\sf-test-data\swift_test_data.7z %root_data_dir% %COPYOPTIONS%
+
 
 :exit
 if !exit_code! neq 0 (
