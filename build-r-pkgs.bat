@@ -47,10 +47,12 @@ if not defined SWIFT_SAMPLE_DATA_DIR set SWIFT_SAMPLE_DATA_DIR=%root_data_dir%\d
 @set ModeUnitTests=Release
 @set PlatformUnitTests=x64
 
-@REM as of June 2023: need to install R 4.2.x also. The Windows Image in AZDO now comes with R 4.3, and RTools 4.3. However the mingw ld.exe has a bug preventing uchronia R pkg to be built (see https://jira.csiro.au/projects/WIRADA/issues/WIRADA-665)
+@REM as of May 2024: migrate to 4.4 due to organisational requirements. 
+set R_VERSION=4.4.0
+
 set R_PROG_DIR=c:\Program Files\R
-set R_EXE="%R_PROG_DIR%\R-4.2.3\bin\x64\R.exe"
-set R_SCRIPT="%R_PROG_DIR%\R-4.2.3\bin\x64\Rscript.exe"
+set R_EXE="%R_PROG_DIR%\R-%R_VERSION%\bin\x64\R.exe"
+set R_SCRIPT="%R_PROG_DIR%\R-%R_VERSION%\bin\x64\Rscript.exe"
 
 call %cc_script_dir%\setup_dev Default 64
 @if %errorlevel% neq 0 (
