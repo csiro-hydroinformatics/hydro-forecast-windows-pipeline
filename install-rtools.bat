@@ -54,7 +54,7 @@ if %errorlevel% neq 0 (
     goto exit
 )
 
-curl -o  https://cran.csiro.au/bin/windows/Rtools/rtools%RTOOLS_VERSION%/files/%RTOOLS_FN%
+curl -o %RTOOLS_FN% https://cran.csiro.au/bin/windows/Rtools/rtools%RTOOLS_VERSION%/files/%RTOOLS_FN%
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=%RTOOLS_FN% download failed
