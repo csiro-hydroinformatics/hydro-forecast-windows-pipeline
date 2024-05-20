@@ -12,6 +12,7 @@ options(repos = r)
 print("Installing installr")
 install.packages(c('installr'), quiet=TRUE, type="win.binary")
 
+library("installr")
 print("Installing rtools if need be")
 rtinst = install.Rtools(check = TRUE, check_r_update = FALSE, GUI = FALSE)
 
