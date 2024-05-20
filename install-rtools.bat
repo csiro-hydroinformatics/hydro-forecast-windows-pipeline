@@ -2,6 +2,7 @@ setlocal ENABLEEXTENSIONS
 setlocal ENABLEDELAYEDEXPANSION
 
 @echo off
+@echo on
 
 echo ""
 echo ###################################
@@ -23,6 +24,8 @@ if not exist %download_dir% (
     goto exit
 ) 
 
+SET parent_dir=%~dp0
+
 cd %download_dir%
 
 @REM Ideally should do something like this to get the exact version:
@@ -42,7 +45,7 @@ set RTOOLS_VERSION=44
 set RTOOLS_FN=rtools44-6104-6039.exe
 
 
-Rscript install-rtools.R
+Rscript %parent_dir%\install-rtools.R
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
     set error_msg=Rscript install-rtools.R FAILED
