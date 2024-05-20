@@ -2,8 +2,8 @@
 # May 2024: requirements to build against 4.4 WIRADA-700
 
 
-if (version$major != '4') {print("Unexpected version of R: major is not 4"); q(save='no', status=1)}
-if (version$minor[1] != '4') {print("Unexpected version of R: minor is not 4.x"); q(save='no', status=1)}
+if (version$major != '4') {print(paste("Unexpected version of R: major is not 4 but", version$major)); q(save='no', status=1)}
+if (version$minor != '4.0') {print(paste("Unexpected version of R: minor is not 4.0 but", version$minor)); q(save='no', status=1)}
 
 r <- getOption("repos")
 r["CRAN"] <- "https://cran.csiro.au"

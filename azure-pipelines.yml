@@ -84,11 +84,11 @@ stages:
     #       mkdir -p $include_dir_nix
     #       exit 0
     #   displayName: 'Install third party libraries and headers'
-    - script: |
-        call dos-setup.bat
-        R --version
-        exit 2
-      displayName: 'Check R version'
+    # - script: |
+    #     call dos-setup.bat
+    #     R --version
+    #     exit 2
+    #   displayName: 'Check R version'
     - script: |
         call dos-setup.bat
         call checkout.bat
