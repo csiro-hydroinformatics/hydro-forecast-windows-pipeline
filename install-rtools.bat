@@ -35,38 +35,49 @@ cd %download_dir%
 
 @REM as of June 2023: need to install R 4.2.x also. The Windows Image in AZDO now comes with R 4.3, and RTools 4.3. However the mingw ld.exe has a bug preventing uchronia R pkg to be built (see https://jira.csiro.au/projects/WIRADA/issues/WIRADA-665)
 @REM as of May 2024: migrate to 4.4 due to organisational requirements. ticket WIRADA-700.
+@REM May 2024 the version of R on the windows-2019 image is 4.4. Installing rtools from an curl downlowd somehow fails now.
 set R_VERSION=4.4.0
 set RTOOLS_VERSION=44
 @REM rtools42-5355-5357.exe
 set RTOOLS_FN=rtools44-6104-6039.exe
 
-curl -o R-%R_VERSION%-win.exe https://cran.csiro.au/bin/windows/base/old/%R_VERSION%/R-%R_VERSION%-win.exe
+
+Rscript install-rtools.R
 if %errorlevel% neq 0 (
     set exit_code=%errorlevel%
-    set error_msg=R-%R_VERSION%-win.exe download failed
+    set error_msg=Rscript install-rtools.R FAILED
     goto exit
 )
 
-R-%R_VERSION%-win.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
-if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=FAILED: R-%R_VERSION%-win.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
-    goto exit
-)
+@REM curl -o R-%R_VERSION%-win.exe https://cran.csiro.au/bin/windows/base/old/%R_VERSION%/R-%R_VERSION%-win.exe
+@REM if %errorlevel% neq 0 (
+@REM     set exit_code=%errorlevel%
+@REM     set error_msg=R-%R_VERSION%-win.exe download failed
+@REM     goto exit
+@REM )
 
-curl -o %RTOOLS_FN% https://cran.csiro.au/bin/windows/Rtools/rtools%RTOOLS_VERSION%/files/%RTOOLS_FN%
-if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=%RTOOLS_FN% download failed
-    goto exit
-)
+@REM R-%R_VERSION%-win.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+@REM if %errorlevel% neq 0 (
+@REM     set exit_code=%errorlevel%
+@REM     set error_msg=FAILED: R-%R_VERSION%-win.exe  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+@REM     goto exit
+@REM )
 
-%RTOOLS_FN%  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
-if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=FAILED: %RTOOLS_FN%  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
-    goto exit
-)
+@REM curl -o %RTOOLS_FN% https://cran.csiro.au/bin/windows/Rtools/rtools%RTOOLS_VERSION%/files/%RTOOLS_FN%
+@REM if %errorlevel% neq 0 (
+@REM     set exit_code=%errorlevel%
+@REM     set error_msg=%RTOOLS_FN% download failed
+@REM     goto exit
+@REM )
+
+@REM echo %RTOOLS_FN% /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+
+@REM %RTOOLS_FN% /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+@REM if %errorlevel% neq 0 (
+@REM     set exit_code=%errorlevel%
+@REM     set error_msg=FAILED: %RTOOLS_FN%  /VERYSILENT /SUPRESSMSGBOXES /NORESTART /ALLUSERS
+@REM     goto exit
+@REM )
 
 :exit
 if !exit_code! neq 0 (
