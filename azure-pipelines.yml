@@ -86,6 +86,11 @@ stages:
     #   displayName: 'Install third party libraries and headers'
     - script: |
         call dos-setup.bat
+        R --version
+        exit 2
+      displayName: 'Check R version'
+    - script: |
+        call dos-setup.bat
         call checkout.bat
       env:
         SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
