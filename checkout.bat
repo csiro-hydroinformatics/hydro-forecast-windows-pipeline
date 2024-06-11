@@ -161,9 +161,9 @@ if %errorlevel% neq 0 (
     goto exit
 )
 
-if not exist sf-test-data git clone %GITHUB_REPO_ROOT%/sf-test-data.git
+@REM if not exist sf-test-data git clone %GITHUB_REPO_ROOT%/sf-test-data.git
 
-if not exist sf-stack-deps git clone %GITHUB_REPO_ROOT%/sf-stack-deps.git
+@REM if not exist sf-stack-deps git clone %GITHUB_REPO_ROOT%/sf-stack-deps.git
 
 cd %GITHUB_REPOS%
 if not exist c-interop git clone %GITHUB_REPO_ROOT%/c-interop.git

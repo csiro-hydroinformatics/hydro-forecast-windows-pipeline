@@ -44,14 +44,14 @@ if not exist %OUR_SRC_DIR% (
     goto exit
 ) 
 
-if not exist %GITHUB_REPOS%\sf-test-data ( 
-    echo "ERROR: %GITHUB_REPOS%\sf-test-data not found"
-    set exit_code=1
-    goto exit
-) 
+@REM if not exist %GITHUB_REPOS%\sf-test-data ( 
+@REM     echo "ERROR: %GITHUB_REPOS%\sf-test-data not found"
+@REM     set exit_code=1
+@REM     goto exit
+@REM ) 
 
-set COPYOPTIONS=/Y /R
-xcopy %GITHUB_REPOS%\sf-test-data\swift_test_data.7z %root_data_dir% %COPYOPTIONS%
+@REM set COPYOPTIONS=/Y /R
+@REM xcopy %GITHUB_REPOS%\sf-test-data\swift_test_data.7z %root_data_dir% %COPYOPTIONS%
 
 
 :exit
