@@ -154,12 +154,13 @@ git checkout %REPO_MOIRAI%
 REM binary data, dependencies and unit tests data. 
 cd %GITHUB_REPOS%
 
-git lfs install
-if %errorlevel% neq 0 ( 
-    echo "ERROR: `git lfs install` failed"
-    set exit_code=1
-    goto exit
-)
+@REM Jul 24 suspending or deprecating the use of github lfs. Requires ongoing fee, may make things brittle.
+@REM git lfs install
+@REM if %errorlevel% neq 0 ( 
+@REM     echo "ERROR: `git lfs install` failed"
+@REM     set exit_code=1
+@REM     goto exit
+@REM )
 
 @REM if not exist sf-test-data git clone %GITHUB_REPO_ROOT%/sf-test-data.git
 
