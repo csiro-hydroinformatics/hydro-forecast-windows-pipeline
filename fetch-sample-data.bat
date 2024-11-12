@@ -58,7 +58,7 @@ if %errorlevel% neq 0 (
 )
 
 @REM cloudstor decomissioned
-@REM curl -o swift_test_data.7z https://cloudstor.aarnet.edu.au/plus/s/RU6kLfzuncINu4f/download
+@REM curl -o swift_test_data.7z ftp://ftp.csiro.au/hfc/swift_test_data.7z
 @REM if %errorlevel% neq 0 (
 @REM     set exit_code=%errorlevel%
 @REM     set error_msg=swift_test_data.7z download failed

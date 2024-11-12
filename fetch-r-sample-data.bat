@@ -28,7 +28,7 @@ if not exist %r_data_dir% (
 cd %r_data_dir%
 
 @REM cloudstor decomissioned
-@REM curl -o swift_sample_data.rda https://cloudstor.aarnet.edu.au/plus/s/vfIbwcISy8jKQmg/download
+@REM curl -o swift_sample_data.rda ftp://ftp.csiro.au/hfc/swift_sample_data.rda
 @REM if %errorlevel% neq 0 (
 @REM     set exit_code=%errorlevel%
 @REM     set error_msg=swift_sample_data.rda download failed
