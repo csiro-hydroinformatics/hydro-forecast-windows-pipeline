@@ -117,6 +117,11 @@ REM Also, sorry for ugly redundancies. I dont trust to get Batch loops right yet
 
 set R_BUILD_CMD=%R_VANILLA% CMD INSTALL --build
 
+echo ***********************
+echo R version used to build:
+%R_VANILLA% --version
+echo ***********************
+
 if not exist %R_WINBIN_REPO_DIR% (
     set error_msg=ERROR: %R_WINBIN_REPO_DIR% does not exist - should already have been created
     set exit_code=1
@@ -133,59 +138,16 @@ echo ******************************************
 
 cd %R_WINBIN_REPO_DIR%
 
-for %%I in ( %tarball_dir%\mhplot_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package mhplot failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\cinterop_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package cinterop failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\msvs_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package msvs failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\uchronia_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package uchronia failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\joki_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package joki failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\swift_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package swift failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\calibragem_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package calibragem failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\qpp_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package qpp failed
-    goto exit
-)
-for %%I in ( %tarball_dir%\efts_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
-@if %errorlevel% neq 0 (
-    set exit_code=%errorlevel%
-    set error_msg=Building R package efts failed
-    goto exit
+for %%P in (mhplot cinterop msvs uchronia joki swift calibragem qpp efts) do (
+    for %%I in (%tarball_dir%\%%P_*.tar.gz) do (
+        echo running command %R_BUILD_CMD% %%~fI
+        %R_BUILD_CMD% %%~fI
+    )
+    @if %errorlevel% neq 0 (
+        set exit_code=%errorlevel%
+        set error_msg=Building R package %%P failed, with error code %exit_code%
+        goto exit
+    )
 )
 
 copy %tarball_dir%\*.tar.gz %R_SRC_PKGS_DIR%\

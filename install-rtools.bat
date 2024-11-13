@@ -44,15 +44,14 @@ set RTOOLS_VERSION=44
 @REM rtools42-5355-5357.exe
 set RTOOLS_FN=rtools44-6104-6039.exe
 
-
 Rscript %parent_dir%\install-rtools.R
 
 @REM If there is already RTools 44 installed the code will not be zero. We cannot rely on the exit code to exit.
-@REM if %errorlevel% neq 0 (
-@REM     set exit_code=%errorlevel%
-@REM     set error_msg=Rscript install-rtools.R FAILED
-@REM     goto exit
-@REM )
+if %errorlevel% neq 0 (
+    set exit_code=%errorlevel%
+    set error_msg=Rscript install-rtools.R FAILED - check the consistency of versions of R and RTools
+    goto exit
+)
 
 @REM Deprecated:
 @REM curl -o R-%R_VERSION%-win.exe https://cran.csiro.au/bin/windows/base/old/%R_VERSION%/R-%R_VERSION%-win.exe
