@@ -90,6 +90,9 @@ fi
 currentver=`cat ${swift_current_version_dir}/version.txt`
 newver=`cat ${swift_setup_version_dir}/version.txt`
 
+echo "Current version, if any: $currentver"
+echo "New version dowloaded: $newver"
+
 vercomp $currentver $newver
 case $? in
     0) op='=';;
@@ -110,5 +113,7 @@ else
     fi
     # and we end up by setting the current version.
     echo $newver > ${swift_current_version_dir}/version.txt
+    echo "${swift_setup_dir} now contains:"
+    ls -l ${swift_setup_dir}
     exit 0;
 fi

@@ -123,6 +123,14 @@ if not exist %R_WINBIN_REPO_DIR% (
     goto exit
 )
 
+echo INFO: %tarball_dir% tested to exist, and contains:
+dir %tarball_dir%
+
+echo ******************************************
+echo INFO: Starting to build R packages found under %tarball_dir%
+echo outputting to %R_WINBIN_REPO_DIR%
+echo ******************************************
+
 cd %R_WINBIN_REPO_DIR%
 
 for %%I in ( %tarball_dir%\mhplot_*.tar.gz ) do ( %R_BUILD_CMD% %%~fI )
