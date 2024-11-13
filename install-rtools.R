@@ -16,6 +16,18 @@ install.packages(c('installr'), quiet=TRUE, type="win.binary")
 
 library("installr")
 print("Installing rtools if need be")
-rtinst = install.Rtools(check = TRUE, check_r_update = FALSE, GUI = FALSE)
+# Capture the output
+output <- capture.output({
+    rtinst = install.Rtools(check = TRUE, check_r_update = FALSE, GUI = FALSE)
+})
 
-if (!rtinst)  {q(save='no', status=1)}
+# Get the last standard output message
+last_message <- tail(output, n = 1)
+print(last_message)
+if (!rtinst)  
+{
+    if (last_message!="No need to install Rtools - You've got the relevant version of Rtools installed")
+    {
+        q(save='no', status=1)
+    }
+}
