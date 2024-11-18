@@ -26,7 +26,6 @@ if not exist %download_dir% (
 
 SET parent_dir=%~dp0
 
-cd %download_dir%
 
 @REM Ideally should do something like this to get the exact version:
 :: curl -o blah.html https://cran.csiro.au/bin/windows/Rtools/rtools42/files/
@@ -47,10 +46,12 @@ call set-r-version.bat
     goto exit
 )
 
+
 set RTOOLS_VERSION=44
 @REM rtools42-5355-5357.exe
 set RTOOLS_FN=rtools44-6104-6039.exe
 
+cd %download_dir%
 Rscript %parent_dir%\install-rtools.R
 
 @REM If there is already RTools 44 installed the code will not be zero. We cannot rely on the exit code to exit.
