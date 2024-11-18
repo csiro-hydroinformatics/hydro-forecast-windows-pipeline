@@ -39,7 +39,13 @@ cd %download_dir%
 @REM as of June 2023: need to install R 4.2.x also. The Windows Image in AZDO now comes with R 4.3, and RTools 4.3. However the mingw ld.exe has a bug preventing uchronia R pkg to be built (see https://jira.csiro.au/projects/WIRADA/issues/WIRADA-665)
 @REM as of May 2024: migrate to 4.4 due to organisational requirements. ticket WIRADA-700.
 @REM May 2024 the version of R on the windows-2019 image is 4.4. Installing rtools from an curl downlowd somehow fails now.
-set R_VERSION=4.4.0
+call set-r-version.bat
+@if %errorlevel% neq 0 (
+    set exit_code=%errorlevel%
+    set error_msg=call to set-r-version failed
+    goto exit
+)
+
 set RTOOLS_VERSION=44
 @REM rtools42-5355-5357.exe
 set RTOOLS_FN=rtools44-6104-6039.exe

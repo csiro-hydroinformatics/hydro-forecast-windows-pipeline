@@ -34,15 +34,10 @@ if not defined SWIFT_SAMPLE_DATA_DIR set SWIFT_SAMPLE_DATA_DIR=%root_data_dir%\d
 @set PlatformUnitTests=x64
 
 @REM as of May 2024: migrate to 4.4 due to organisational requirements. 
-set R_VERSION=4.4.0
-
-set R_PROG_DIR=c:\Program Files\R
-set R_EXE="%R_PROG_DIR%\R-%R_VERSION%\bin\x64\R.exe"
-set R_SCRIPT="%R_PROG_DIR%\R-%R_VERSION%\bin\x64\Rscript.exe"
-
-if not exist %R_EXE% (
-    set error_msg="ERROR: path '%R_EXE%' does not exist"
-    set exit_code=1
+call set-r-version.bat
+@if %errorlevel% neq 0 (
+    set exit_code=%errorlevel%
+    set error_msg=call to set-r-version failed
     goto exit
 )
 
