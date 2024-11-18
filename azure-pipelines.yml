@@ -98,6 +98,13 @@ stages:
       displayName: check out sources
     - script: |
         call dos-setup.bat
+        call check-prerequisites.bat
+      env:
+        SWIFT_PAT_ENV_VAR: $(SWIFT_PAT) # the recommended way to map to an env variable
+        BRANCH_NAME_ENV_VAR: $(Build.SourceBranchName)
+      displayName: 'sw prerequisites checks'
+    - script: |
+        call dos-setup.bat
         call third-party.bat
       displayName: 'Fetch/install third party dependencies'
     - script: |
