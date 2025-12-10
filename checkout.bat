@@ -192,7 +192,7 @@ git checkout %REPO_CONFIG_UTILS%
 cd %GITHUB_REPOS%
 if not exist yaml-cpp git clone %GITHUB_JM_REPO_ROOT%/yaml-cpp.git
 cd %GITHUB_REPOS%\yaml-cpp
-git checkout yaml_swift_experimental
+git checkout yaml_swift
 
 cd %GITHUB_REPOS%
 if not exist jsoncpp git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
