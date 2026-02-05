@@ -2,8 +2,8 @@
 @set exit_code_setrv=0
 @set error_msg=""
 
-@REM as of Nov 2024
-set R_VERSION=4.4.2
+@REM as of Feb 2026 windows 2022
+set R_VERSION=4.5.2
 
 set R_PROG_DIR=c:\Program Files\R
 set R_EXE="%R_PROG_DIR%\R-%R_VERSION%\bin\x64\R.exe"
