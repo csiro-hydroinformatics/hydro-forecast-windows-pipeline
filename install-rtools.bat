@@ -47,9 +47,10 @@ call set-r-version.bat
 )
 
 
-set RTOOLS_VERSION=44
+set RTOOLS_VERSION=45
 @REM rtools42-5355-5357.exe
-set RTOOLS_FN=rtools44-6104-6039.exe
+@REM set RTOOLS_FN=rtools44-6104-6039.exe
+set RTOOLS_FN=rtools45-6691-6492.exe
 
 cd %download_dir%
 Rscript %parent_dir%\install-rtools.R
