@@ -144,7 +144,7 @@ echo ******************************************
 
 cd %R_WINBIN_REPO_DIR%
 
-for %%P in (mhplot cinterop msvs uchronia joki swift calibragem qpp efts) do (
+for %%P in (mhplot cinterop msvs uchronia joki swift calibragem qpp) do (
     for %%I in (%tarball_dir%\%%P_*.tar.gz) do (
         echo running command %R_BUILD_CMD% %%~fI
         %R_BUILD_CMD% %%~fI

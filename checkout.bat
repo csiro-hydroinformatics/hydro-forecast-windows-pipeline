@@ -84,7 +84,7 @@ echo REPO_PYREFCOUNT=%REPO_PYREFCOUNT%
 echo REPO_THREADPOOL=%REPO_THREADPOOL%
 echo REPO_CONFIG_UTILS=%REPO_CONFIG_UTILS%
 echo REPO_WILA=%REPO_WILA%
-echo REPO_EFTS=%REPO_EFTS%
+@REM echo REPO_EFTS=%REPO_EFTS%
 echo REPO_EFTS_PYTHON=%REPO_EFTS_PYTHON%
 echo REPO_MHPLOT=%REPO_MHPLOT%
 
@@ -199,10 +199,10 @@ if not exist jsoncpp git clone %GITHUB_JM_REPO_ROOT%/jsoncpp.git
 cd %GITHUB_REPOS%\jsoncpp
 git checkout custom/experimental
 
-cd %GITHUB_REPOS%
-if not exist efts git clone %GITHUB_REPO_ROOT%/efts.git
-cd %GITHUB_REPOS%\efts
-git checkout %REPO_EFTS%
+@REM cd %GITHUB_REPOS%
+@REM if not exist efts git clone %GITHUB_REPO_ROOT%/efts.git
+@REM cd %GITHUB_REPOS%\efts
+@REM git checkout %REPO_EFTS%
 
 cd %GITHUB_REPOS%
 if not exist efts-python git clone %GITHUB_REPO_ROOT%/efts-python.git
