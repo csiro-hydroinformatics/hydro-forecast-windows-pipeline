@@ -96,7 +96,8 @@ set R_LIBS_SITE=%rlib_nix%
 REM if not calling build_r_packages.cmd:
 %R_SCRIPT% %csiro_dir%\cruise-control\scripts\setup_dependent_packages.r
 
-@REM set RCMD_BUILD_OPT_NO_VIGNETTE=--no-build-vignettes
+:: https://github.com/csiro-internal/swift/issues/7 have to disable.
+set RCMD_BUILD_OPT_NO_VIGNETTE=--no-build-vignettes
 @REM @REM call %cc_script_dir%\build_r_packages.cmd %RCMD_BUILD_OPT_NO_VIGNETTE%
 @REM call %cc_script_dir%\build_r_packages.cmd
 @REM @if %errorlevel% neq 0 (
