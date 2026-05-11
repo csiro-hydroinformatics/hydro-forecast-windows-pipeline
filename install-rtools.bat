@@ -48,7 +48,7 @@ call set-r-version.bat
 
 
 @REM May 2026 note image moved to r 4.6, but rtools is expected to be installed
-set RTOOLS_VERSION=45
+set RTOOLS_VERSION=46
 @REM rtools42-5355-5357.exe
 @REM set RTOOLS_FN=rtools44-6104-6039.exe
 set RTOOLS_FN=rtools45-6691-6492.exe

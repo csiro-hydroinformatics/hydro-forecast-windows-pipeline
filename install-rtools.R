@@ -5,7 +5,7 @@ if (version$major != '4') {print(paste("Unexpected version of R: major is not 4 
 
 # if R version is 4.4.2 then version$minor is 4.2 . We do not want to check exactly the relase part "2", but that "4"
 minor <- substr(version$minor[1], 1, 1)
-expected_minor <- '5' # Feb 2026
+expected_minor <- '6' # May 2026
 if ( minor != expected_minor) {print(paste("Unexpected minor version of R: minor is not '",expected_minor,"' but", minor, ". full minor version nb is ", version$minor)); q(save='no', status=1)}
 
 r <- getOption("repos")
